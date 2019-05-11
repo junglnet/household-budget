@@ -27,6 +27,7 @@ namespace HouseholdBudget.Common.Entities
         public decimal GetTransactionsSum(DateTime startDate, DateTime endDate)
         {
             List<ITransaction> tmpTransactions = Transactions.FindAll(d => d.DateTime >= startDate && d.DateTime <= endDate);
+
             if (tmpTransactions.Count == 0) return 0;
             decimal sum = 0;
             foreach(ITransaction ts in tmpTransactions)
