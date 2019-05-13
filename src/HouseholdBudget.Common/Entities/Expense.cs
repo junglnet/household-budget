@@ -7,12 +7,9 @@ namespace HouseholdBudget.Common.Entities
     /// </summary>
     public class Expense : DictionaryBase, ITypeTransaction
     {
-        public decimal GetOperation(
-            IBudgetaryFund SourceBudgetaryFund,
-            IBudgetaryFund EndPointBudgetaryFund,
-            decimal sum)
+        public decimal GetOperation(ITransaction transaction)
         {
-            return -sum;
+            return (transaction.FactSum != 0) ? -transaction.FactSum : -transaction.PlannedSum;
         }
 
     }

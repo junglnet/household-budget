@@ -5,14 +5,21 @@ namespace HouseholdBudget.Common.Entities
     /// <summary>
     /// Класс описывает тип транзакции: Приход
     /// </summary>
-    public class Income : DictionaryBase, ITypeTransaction
+    public class Income : DictionaryBase, ITypeTransaction, ITransactionSaver
     {
-        public decimal GetOperation(
-            IBudgetaryFund SourceBudgetaryFund,
-            IBudgetaryFund EndPointBudgetaryFund,
-            decimal sum)
+        public decimal GetOperation(ITransaction transaction)
         {
-            return sum;
+            return (transaction.FactSum != 0) ? transaction.FactSum : transaction.PlannedSum;
+        }
+
+        public void SaveTransaction(ITransaction transaction)
+        {
+            if (
+                transaction.SourceBudgetaryFund == transaction.EndPointBudgetaryFund || 
+                transaction.SourceBudgetaryFund == null) {
+                transaction.EndPointBudgetaryFund.Transactions.Add(transaction);
+            }
+                  
         }
     }
 }

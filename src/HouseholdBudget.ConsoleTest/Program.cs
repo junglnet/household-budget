@@ -47,6 +47,8 @@ namespace HouseholdBudget.ConsoleTest
                 SourceBudgetaryFund = mainFund
             };
 
+            
+
             mainFund.Transactions = new List<ITransaction>();
             mainFund.Transactions.Add(ts1);
             mainFund.Transactions.Add(ts2);

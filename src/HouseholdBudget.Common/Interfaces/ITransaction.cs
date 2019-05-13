@@ -2,9 +2,14 @@
 
 namespace HouseholdBudget.Common.Interfaces
 {
-    public interface ITransaction 
+    public interface ITransaction
     {
         decimal GetOperation();
+
+        /// <summary>
+        /// ИД транзакции
+        /// </summary>
+        string Id { get; set; }
 
         /// <summary>
         /// Название транзакции
