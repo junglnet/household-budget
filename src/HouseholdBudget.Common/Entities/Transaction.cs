@@ -78,7 +78,7 @@ namespace HouseholdBudget.Common.Entities
         /// Истоник транзакции
         /// </summary>
         public IBudgetaryFund SourceBudgetaryFund { get; set; }
-
+         
         /// <summary>
         /// Получатель транзации
         /// </summary>
