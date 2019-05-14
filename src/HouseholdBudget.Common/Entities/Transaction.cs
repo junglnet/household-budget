@@ -47,8 +47,9 @@ namespace HouseholdBudget.Common.Entities
         /// Сохранение транзакции
         /// </summary>
         public void SaveTransaction() =>
-            TransactionSaver.SaveTransaction(this);        
+            TransactionSaver.SaveTransaction(this);
 
+        
         /// <summary>
         /// Плановая сумма транзации
         /// </summary>

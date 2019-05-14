@@ -16,7 +16,8 @@ namespace HouseholdBudget.ConsoleTest
                 Name = "Зачисление ЗП",
                 PlannedSum = 30000,
                 FactSum = 299800,
-                TypeTransaction = new Income(),               
+                TypeTransaction = new Income(),  
+                TransactionSaver = new Income(),
                 EndPointBudgetaryFund = mainFund
             };
 
@@ -47,15 +48,13 @@ namespace HouseholdBudget.ConsoleTest
                 SourceBudgetaryFund = mainFund
             };
 
+
+            ts1.SaveTransaction();
+            Console.WriteLine(mainFund.AddTransaction(ts2));
+            Console.WriteLine(mainFund.AddTransaction(ts3));
+            Console.WriteLine(mainFund.AddTransaction(ts4));
+           
             
-
-            mainFund.Transactions = new List<ITransaction>();
-            mainFund.Transactions.Add(ts1);
-            mainFund.Transactions.Add(ts2);
-            mainFund.Transactions.Add(ts3);
-            mainFund.Transactions.Add(ts4);
-            mainFund.Transactions.Sort();
-
             foreach (ITransaction ts in mainFund.Transactions)
                 Console.WriteLine("Операция {0}, план {1}, факт {2}, дата {3}", 
                     ts.Name, ts.PlannedSum, ts.FactSum, ts.DateTime);

@@ -5,7 +5,7 @@ namespace HouseholdBudget.Common.Interfaces
     public interface ITransaction
     {
         decimal GetOperation();
-
+        void SaveTransaction();
         /// <summary>
         /// ИД транзакции
         /// </summary>

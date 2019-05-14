@@ -5,6 +5,9 @@ namespace HouseholdBudget.Common.Interfaces
 {
     public interface IBudgetaryFund
     {
+
+        string AddTransaction(ITransaction transaction);
+
         string Name { get; set; }
 
         List<ITransaction> Transactions { get; set; }

@@ -8,17 +8,32 @@ namespace HouseholdBudget.Common.Entities
     {
         public BudgetaryFund()
         {
-
+            Transactions = new List<ITransaction>();
         }
 
         public BudgetaryFund(string name)
         {
             Name = name;
+            Transactions = new List<ITransaction>();
         }
 
         public BudgetaryFund(string id, string name) : base(id, name)
         {
+            Transactions = new List<ITransaction>();
+        }
 
+        /// <summary>
+        /// Добавление транзации в бюджетный фонд
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns>ИД транзации</returns>
+        public string AddTransaction(ITransaction transaction)
+        {
+            if (transaction == null) return null;
+            transaction.Id = Guid.NewGuid().ToString("N");
+            Transactions.Add(transaction);
+            Transactions.Sort();
+            return transaction.Id;
         }
 
         public List<ITransaction> GetTransactions(DateTime startDate, DateTime endDate) =>

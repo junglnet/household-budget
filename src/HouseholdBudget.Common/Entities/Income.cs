@@ -17,7 +17,13 @@ namespace HouseholdBudget.Common.Entities
             if (
                 transaction.SourceBudgetaryFund == transaction.EndPointBudgetaryFund || 
                 transaction.SourceBudgetaryFund == null) {
-                transaction.EndPointBudgetaryFund.Transactions.Add(transaction);
+                transaction.EndPointBudgetaryFund.AddTransaction(transaction);
+            }
+
+            else
+            {
+                ITransaction expenseTransation;
+                
             }
                   
         }
