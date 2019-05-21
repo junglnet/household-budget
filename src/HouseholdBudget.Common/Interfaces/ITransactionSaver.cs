@@ -1,9 +1,9 @@
-﻿
+﻿using HouseholdBudget.Common.Entities;
 
 namespace HouseholdBudget.Common.Interfaces
 {
     public interface ITransactionSaver
     {
-        void SaveTransaction(ITransaction transaction);
+        void SaveTransaction(Transaction transaction);
     }
 }

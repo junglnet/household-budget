@@ -3,11 +3,12 @@ using HouseholdBudget.Common.Interfaces;
 
 namespace HouseholdBudget.Common.Entities
 {
-    public class Transaction : DictionaryBase, ITransaction, IComparable
+    public class Transaction : DictionaryBase, IComparable, ICloneable
     {
         
         public Transaction()
         {
+            Id = null;
             PlannedSum = 0;
             FactSum = 0;
             DateTime = DateTime.Now;
@@ -17,6 +18,7 @@ namespace HouseholdBudget.Common.Entities
 
         public Transaction(string name)
         {
+            Id = null;
             Name = name;
             PlannedSum = 0;
             FactSum = 0;
@@ -49,7 +51,19 @@ namespace HouseholdBudget.Common.Entities
         public void SaveTransaction() =>
             TransactionSaver.SaveTransaction(this);
 
-        
+        public object Clone() =>
+            this.MemberwiseClone();
+
+        public int CompareTo(object o)
+        {
+            Transaction t = o as Transaction;
+            if (t != null)
+                return DateTime.CompareTo(t.DateTime);
+            else
+                throw new Exception("Невозможно сравнить два объекта");
+
+        }
+
         /// <summary>
         /// Плановая сумма транзации
         /// </summary>
@@ -78,22 +92,14 @@ namespace HouseholdBudget.Common.Entities
         /// <summary>
         /// Истоник транзакции
         /// </summary>
-        public IBudgetaryFund SourceBudgetaryFund { get; set; }
+        public BudgetaryFund SourceBudgetaryFund { get; set; }
          
         /// <summary>
         /// Получатель транзации
         /// </summary>
-        public IBudgetaryFund EndPointBudgetaryFund { get; set; }
+        public BudgetaryFund EndPointBudgetaryFund { get; set; }
 
-        public int CompareTo(object o)
-        {
-            Transaction t = o as Transaction;
-            if (t != null)
-                return DateTime.CompareTo(t.DateTime);
-            else
-                throw new Exception("Невозможно сравнить два объекта");
-            
-        }       
+         
 
 
     }

@@ -7,7 +7,7 @@ namespace HouseholdBudget.Common.Entities
     /// </summary>
     public class Balance : DictionaryBase, ITypeTransaction
     {
-        public decimal GetOperation(ITransaction transaction)
+        public decimal GetOperation(Transaction transaction)
         {
             return (transaction.FactSum != 0) ? transaction.FactSum : transaction.PlannedSum;
         }

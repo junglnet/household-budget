@@ -48,8 +48,6 @@
     <Compile Include="Entities\Expense.cs" />
     <Compile Include="Entities\Income.cs" />
     <Compile Include="Entities\Transaction.cs" />
-    <Compile Include="Interfaces\IBudgetaryFund.cs" />
-    <Compile Include="Interfaces\ITransaction.cs" />
     <Compile Include="Interfaces\ITransactionSaver.cs" />
     <Compile Include="Interfaces\ITypeTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

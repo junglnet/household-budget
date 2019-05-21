@@ -10,8 +10,8 @@ namespace HouseholdBudget.ConsoleTest
         static void Main(string[] args)
         {
                 
-            IBudgetaryFund mainFund = new BudgetaryFund("Основной бюджет");
-            ITransaction ts1 = new Transaction
+            BudgetaryFund mainFund = new BudgetaryFund("Основной бюджет");
+            Transaction ts1 = new Transaction
             {
                 Name = "Зачисление ЗП",
                 PlannedSum = 30000,
@@ -21,7 +21,7 @@ namespace HouseholdBudget.ConsoleTest
                 EndPointBudgetaryFund = mainFund
             };
 
-            ITransaction ts2 = new Transaction
+            Transaction ts2 = new Transaction
             {
                 Name = "Оплата телефона",                
                 FactSum = 850000,                
@@ -29,7 +29,7 @@ namespace HouseholdBudget.ConsoleTest
                 SourceBudgetaryFund = mainFund                
             };
 
-            ITransaction ts3 = new Transaction
+            Transaction ts3 = new Transaction
             {
                 Name = "Сальдо",
                 FactSum = 10000,
@@ -39,7 +39,7 @@ namespace HouseholdBudget.ConsoleTest
                 EndPointBudgetaryFund = mainFund
             };
 
-            ITransaction ts4 = new Transaction
+            Transaction ts4 = new Transaction
             {
                 Name = "Оплата телефона",
                 FactSum = 15000,
@@ -50,17 +50,25 @@ namespace HouseholdBudget.ConsoleTest
 
 
             ts1.SaveTransaction();
+            Transaction tsnew = (Transaction)ts1.Clone();
+
+            Console.WriteLine("Операция {0}, план {1}, факт {2}, дата {3}, {4}",
+                    ts1.Name, ts1.PlannedSum, ts1.FactSum, ts1.DateTime, ts1.Id);
+
+            Console.WriteLine("Операция {0}, план {1}, факт {2}, дата {3}, {4}",
+                    tsnew.Name, tsnew.PlannedSum, tsnew.FactSum, tsnew.DateTime, tsnew.Id);
+            Console.ReadLine();
             Console.WriteLine(mainFund.AddTransaction(ts2));
             Console.WriteLine(mainFund.AddTransaction(ts3));
             Console.WriteLine(mainFund.AddTransaction(ts4));
            
             
-            foreach (ITransaction ts in mainFund.Transactions)
+            foreach (Transaction ts in mainFund.Transactions)
                 Console.WriteLine("Операция {0}, план {1}, факт {2}, дата {3}", 
                     ts.Name, ts.PlannedSum, ts.FactSum, ts.DateTime);
             Console.WriteLine("...");
 
-            foreach (ITransaction ts in mainFund.GetTransactions(new DateTime(2019, 05, 01), new DateTime(2019, 05, 30)))
+            foreach (Transaction ts in mainFund.GetTransactions(new DateTime(2019, 05, 01), new DateTime(2019, 05, 30)))
                 Console.WriteLine("Операция {0}, план {1}, факт {2}, дата {3}",
                     ts.Name, ts.PlannedSum, ts.FactSum, ts.DateTime);
 

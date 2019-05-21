@@ -7,12 +7,16 @@ namespace HouseholdBudget.Common.Entities
     /// </summary>
     public class Income : DictionaryBase, ITypeTransaction, ITransactionSaver
     {
-        public decimal GetOperation(ITransaction transaction)
+        public decimal GetOperation(Transaction transaction)
         {
             return (transaction.FactSum != 0) ? transaction.FactSum : transaction.PlannedSum;
         }
 
-        public void SaveTransaction(ITransaction transaction)
+        /// <summary>
+        /// Сохранение транзакции
+        /// </summary>
+        /// <param name="transaction"></param>
+        public void SaveTransaction(Transaction transaction)
         {
             if (
                 transaction.SourceBudgetaryFund == transaction.EndPointBudgetaryFund || 
@@ -22,8 +26,17 @@ namespace HouseholdBudget.Common.Entities
 
             else
             {
-                ITransaction expenseTransation;
                 
+                Transaction expenseTransation;
+                expenseTransation = (Transaction)transaction.Clone();
+
+                expenseTransation.EndPointBudgetaryFund = transaction.SourceBudgetaryFund;
+                expenseTransation.SourceBudgetaryFund = null;
+                expenseTransation.TypeTransaction = new Expense();
+                expenseTransation.TransactionSaver = new Expense();
+
+                transaction.EndPointBudgetaryFund.AddTransaction(transaction);
+                transaction.SourceBudgetaryFund.AddTransaction(expenseTransation);
             }
                   
         }
