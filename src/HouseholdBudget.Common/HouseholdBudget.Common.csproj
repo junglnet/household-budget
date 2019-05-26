@@ -41,16 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Balance.cs" />
+    <Compile Include="Entities\BalanceTypeTransaction.cs" />
     <Compile Include="Entities\BudgetaryFund.cs" />
     <Compile Include="Entities\DictionaryBase.cs" />
     <Compile Include="Entities\EntityBase.cs" />
-    <Compile Include="Entities\Expense.cs" />
-    <Compile Include="Entities\Income.cs" />
+    <Compile Include="Entities\ExpenseTypeTransaction.cs" />
+    <Compile Include="Entities\IncomeTypeTransaction.cs" />
     <Compile Include="Entities\Transaction.cs" />
-    <Compile Include="Entities\TransactionCollection.cs" />
+    <Compile Include="Entities\TransationsBalance.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\ITransactionSaver.cs" />
     <Compile Include="Interfaces\ITypeTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

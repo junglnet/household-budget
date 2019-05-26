@@ -5,37 +5,34 @@ namespace HouseholdBudget.Common.Entities
 {
     public class Transaction : DictionaryBase, IComparable, ICloneable
     {
-        
+
         public Transaction()
         {
-            Id = null;
+            RelationId = null;
             PlannedSum = 0;
             FactSum = 0;
             DateTime = DateTime.Now;
-            SourceBudgetaryFund = null;
-            EndPointBudgetaryFund = null;
+
         }
 
         public Transaction(string name)
         {
-            Id = null;
+            RelationId = null;
             Name = name;
             PlannedSum = 0;
             FactSum = 0;
             DateTime = DateTime.Now;
-            SourceBudgetaryFund = null;
-            EndPointBudgetaryFund = null;
+
         }
 
-        public Transaction(string id, string name)
+        public Transaction(string relationId, string name)
         {
-            Id = id;
+            RelationId = relationId;
             Name = name;
             PlannedSum = 0;
             FactSum = 0;
             DateTime = DateTime.Now;
-            SourceBudgetaryFund = null;
-            EndPointBudgetaryFund = null;
+
         }
 
         /// <summary>
@@ -45,11 +42,6 @@ namespace HouseholdBudget.Common.Entities
         public decimal GetOperation() =>
             TypeTransaction.GetOperation(this);
 
-        /// <summary>
-        /// Сохранение транзакции
-        /// </summary>
-        public void SaveTransaction() =>
-            TransactionSaver.SaveTransaction(this);
 
         public object Clone() =>
             this.MemberwiseClone();
@@ -63,6 +55,8 @@ namespace HouseholdBudget.Common.Entities
                 throw new Exception("Невозможно сравнить два объекта");
 
         }
+
+        public string RelationId {get; set;}
 
         /// <summary>
         /// Плановая сумма транзации
@@ -83,23 +77,7 @@ namespace HouseholdBudget.Common.Entities
         /// Тип транзации
         /// </summary>
         public ITypeTransaction TypeTransaction { get; set; }
-
-        /// <summary>
-        /// Сохранятель транзации
-        /// </summary>
-        public ITransactionSaver TransactionSaver { get; set; }
-
-        /// <summary>
-        /// Истоник транзакции
-        /// </summary>
-        public BudgetaryFund SourceBudgetaryFund { get; set; }
-         
-        /// <summary>
-        /// Получатель транзации
-        /// </summary>
-        public BudgetaryFund EndPointBudgetaryFund { get; set; }
-
-         
+                      
 
 
     }
