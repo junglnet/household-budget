@@ -48,6 +48,7 @@
     <Compile Include="Entities\ExpenseTypeTransaction.cs" />
     <Compile Include="Entities\IncomeTypeTransaction.cs" />
     <Compile Include="Entities\Transaction.cs" />
+    <Compile Include="Entities\TransactionRoute.cs" />
     <Compile Include="Entities\TransationsBalance.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ITypeTransaction.cs" />

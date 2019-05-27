@@ -10,7 +10,17 @@ namespace HouseholdBudget.Common.Entities
     {
         public decimal GetOperation(Transaction transaction) =>
             (transaction.FactSum != 0) ? -transaction.FactSum : -transaction.PlannedSum;
+
+        public void AddToRoute(Transaction transaction, TransactionRoute route) =>
+            route.Source.Transactions.Add(transaction);
+               
+
+        public ITypeTransaction GetRelationType() =>
+            new IncomeTypeTransaction();
         
+
+
+
         public async Task<string> AddAsync(
             Transaction transaction, 
             BudgetaryFund sourceBF, 

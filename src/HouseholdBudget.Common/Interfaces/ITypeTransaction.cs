@@ -7,23 +7,11 @@ namespace HouseholdBudget.Common.Interfaces
     {
         decimal GetOperation (Transaction transaction);
 
-        Task <string> AddAsync (
-            Transaction transaction, 
-            BudgetaryFund sourceBF, 
-            BudgetaryFund receiverBF, 
-            IRepository<Transaction> transationRepository);
+        void AddToRoute(Transaction transaction, TransactionRoute route);
 
-        Task <bool> UpdateAsync (
-            Transaction transaction, 
-            BudgetaryFund sourceBF, 
-            BudgetaryFund receiverBF, 
-            IRepository<Transaction> transationRepository);
+        ITypeTransaction GetRelationType();
 
-        Task<bool> DeleteAsync (
-            Transaction transaction, 
-            BudgetaryFund sourceBF, 
-            BudgetaryFund receiverBF, 
-            IRepository<Transaction> transationRepository);
+
     }
 
 }
