@@ -1,4 +1,5 @@
-﻿
+﻿using HouseholdBudget.Common.Interfaces;
+
 namespace HouseholdBudget.Common.Entities
 {
     public class TransactionRoute

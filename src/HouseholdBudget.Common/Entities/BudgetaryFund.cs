@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using HouseholdBudget.Common.Interfaces;
 
 namespace HouseholdBudget.Common.Entities
 {

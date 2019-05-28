@@ -22,6 +22,12 @@ namespace HouseholdBudget.BL
             _budgetaryFundRepository = budgetaryFundRepository;
         }
 
+        /// <summary>
+        /// Add transaction
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="route"></param>
+        /// <returns></returns>
         public async Task<string> AddAsync(
             Transaction item,
             TransactionRoute route)
@@ -32,22 +38,23 @@ namespace HouseholdBudget.BL
             if (route.GetDistance() == 1) {
 
                 Transaction relationTransaction = (Transaction)item.Clone();
-                relationTransaction.TypeTransaction = item.TypeTransaction.GetRelationType();                
-                relationTransaction.TypeTransaction.AddToRoute(relationTransaction, route);
+                relationTransaction.TypeTransaction = item.GetRelationType();                
+                relationTransaction.AddToRoute(route);
                 await _transationRepository.AddAsync(relationTransaction);
             }
 
-            item.TypeTransaction.AddToRoute(item, route);
+            item.AddToRoute(route);
             await _transationRepository.AddAsync(item);
+
             await _budgetaryFundRepository.UpdateAsync(route.Source);
             await _budgetaryFundRepository.UpdateAsync(route.Receiver);
             return item.RelationId;
 
         }
 
-        //public async Task<bool> UpdateAsync(Transaction item, 
-        //    BudgetaryFund sourceBF, BudgetaryFund receiverBF) =>
-        //        await item.TypeTransaction.UpdateAsync(item, sourceBF, receiverBF, _transationRepository);
+        public async Task<bool> UpdateAsync(Transaction item, 
+           TransactionRoute route) =>
+                await item.TypeTransaction.UpdateAsync(item, route);
 
         //public async Task<bool> DeleteAsync(Transaction item,
         //    BudgetaryFund sourceBF, BudgetaryFund receiverBF) =>
