@@ -22,46 +22,31 @@ namespace HouseholdBudget.BL
             _budgetaryFundRepository = budgetaryFundRepository;
         }
 
-        /// <summary>
-        /// Add transaction
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="route"></param>
-        /// <returns></returns>
-        public async Task<string> AddAsync(
-            Transaction item,
-            TransactionRoute route)
+        public async Task<string> AddAsync(Transaction item, BudgetaryFund budgetaryFund)
 
         {
-            item.RelationId = Guid.NewGuid().ToString("N");
+                       
+            budgetaryFund.Transactions.Add(item);
+            var isUpdated = _transationRepository.AddAsync(item);
+            await _budgetaryFundRepository.UpdateAsync(budgetaryFund);
 
-            if (route.GetDistance() == 1) {
-
-                Transaction relationTransaction = (Transaction)item.Clone();
-                relationTransaction.TypeTransaction = item.GetRelationType();                
-                relationTransaction.AddToRoute(route);
-                await _transationRepository.AddAsync(relationTransaction);
-            }
-
-            item.AddToRoute(route);
-            await _transationRepository.AddAsync(item);
-
-            await _budgetaryFundRepository.UpdateAsync(route.Source);
-            await _budgetaryFundRepository.UpdateAsync(route.Receiver);
-            return item.RelationId;
+            return isUpdated.Result;
 
         }
 
-        public async Task<bool> UpdateAsync(Transaction item, 
-           TransactionRoute route) =>
-                await item.TypeTransaction.UpdateAsync(item, route);
+        public async Task<bool> UpdateAsync(Transaction item, BudgetaryFund budgetaryFund)
+        {
+            budgetaryFund.Transactions.Remove(budgetaryFund.Transactions.Find(t => t.Id == item.Id));
+            budgetaryFund.Transactions.Add(item);
 
-        //public async Task<bool> DeleteAsync(Transaction item,
-        //    BudgetaryFund sourceBF, BudgetaryFund receiverBF) =>
-        //        await item.TypeTransaction.DeleteAsync(item, sourceBF, receiverBF, _transationRepository);
+            var isUpdated = _transationRepository.UpdateAsync(item);
 
+            await _budgetaryFundRepository.UpdateAsync(budgetaryFund);
 
+            return isUpdated.Result;
 
+        }
+                
 
 
 

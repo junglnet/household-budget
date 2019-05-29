@@ -7,11 +7,6 @@ namespace HouseholdBudget.Common.Interfaces
     {
         decimal GetOperation (Transaction transaction);
 
-        void AddToRoute(Transaction transaction, TransactionRoute route);
-
-        ITypeTransaction GetRelationType();
-
-
     }
 
 }

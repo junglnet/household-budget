@@ -42,12 +42,6 @@ namespace HouseholdBudget.Common.Entities
         public decimal GetOperation() =>
             TypeTransaction.GetOperation(this);
 
-        public void AddToRoute(TransactionRoute route) =>
-            TypeTransaction.AddToRoute(this, route);
-
-        public ITypeTransaction GetRelationType() =>
-            TypeTransaction.GetRelationType();
-
         public object Clone() =>
             this.MemberwiseClone();
 
@@ -60,8 +54,7 @@ namespace HouseholdBudget.Common.Entities
                 throw new Exception("Невозможно сравнить два объекта");
 
         }
-
-        public string RelationId {get; set;}
+              
 
         /// <summary>
         /// Плановая сумма транзации

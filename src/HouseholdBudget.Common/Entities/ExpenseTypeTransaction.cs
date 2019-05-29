@@ -59,8 +59,8 @@ namespace HouseholdBudget.Common.Entities
             if (sourceBF.Name != receiverBF.Name)
             {
 
-                receiverBF.Transactions.Remove(
-                    receiverBF.Transactions.Find(item => item.RelationId == transaction.RelationId)
+              //  receiverBF.Transactions.Remove(
+                 //   receiverBF.Transactions.Find(item => item.RelationId == transaction.RelationId)
                     );
 
                 Transaction relationTransaction = (Transaction)transaction.Clone();
@@ -73,7 +73,7 @@ namespace HouseholdBudget.Common.Entities
 
             }                
 
-            sourceBF.Transactions.Remove(sourceBF.Transactions.Find(item => item.RelationId == transaction.RelationId));
+          //  sourceBF.Transactions.Remove(sourceBF.Transactions.Find(item => item.RelationId == transaction.RelationId));
 
             sourceBF.Transactions.Add(transaction);
 
@@ -94,13 +94,13 @@ namespace HouseholdBudget.Common.Entities
             if (sourceBF.Name != receiverBF.Name)
             {
                 receiverBF.Transactions.Remove(
-                    receiverBF.Transactions.Find(item => item.RelationId == transaction.RelationId));
+                 //   receiverBF.Transactions.Find(item => item.RelationId == transaction.RelationId));
 
-                isDeletedReceiverTransaction = await transationRepository.DeleteAsync(transaction.Id);
+             //   isDeletedReceiverTransaction = await transationRepository.DeleteAsync(transaction.Id);
             }
                
 
-            sourceBF.Transactions.Remove(sourceBF.Transactions.Find(item => item.RelationId == transaction.RelationId));
+          //  sourceBF.Transactions.Remove(sourceBF.Transactions.Find(item => item.RelationId == transaction.RelationId));
 
             return isDeletedReceiverTransaction && await transationRepository.DeleteAsync(transaction.Id) ? true : false;
 
