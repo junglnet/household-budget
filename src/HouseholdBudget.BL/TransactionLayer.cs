@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using HouseholdBudget.Common.Entities;
 using HouseholdBudget.Common.Interfaces;
@@ -22,32 +19,109 @@ namespace HouseholdBudget.BL
             _budgetaryFundRepository = budgetaryFundRepository;
         }
 
-        public async Task<string> AddAsync(Transaction item, BudgetaryFund budgetaryFund)
+        public async Task<string> AddAsync(Transaction item, TransactionRoute route)
 
         {
-                       
-            budgetaryFund.Transactions.Add(item);
-            var isUpdated = _transationRepository.AddAsync(item);
-            await _budgetaryFundRepository.UpdateAsync(budgetaryFund);
+            item.RelationId = Guid.NewGuid().ToString("N");
 
-            return isUpdated.Result;
+            if (!route.IsEqual())
+            {
+                var reverseTransation = (Transaction)item.Clone();
+                reverseTransation.TypeTransaction = item.GetReverseType();
+                route.Receiver.Transactions.Add(reverseTransation);
+                await _budgetaryFundRepository.UpdateAsync(route.Receiver);
+            }
+            
+
+            route.Source.Transactions.Add(item);
+            
+            await _budgetaryFundRepository.UpdateAsync(route.Source);
+
+            return item.RelationId;
 
         }
 
-        public async Task<bool> UpdateAsync(Transaction item, BudgetaryFund budgetaryFund)
+        public async Task<bool> UpdateAsync(Transaction item, TransactionRoute route)
         {
-            budgetaryFund.Transactions.Remove(budgetaryFund.Transactions.Find(t => t.Id == item.Id));
-            budgetaryFund.Transactions.Add(item);
 
-            var isUpdated = _transationRepository.UpdateAsync(item);
+            if (!route.IsEqual())
+            {
 
-            await _budgetaryFundRepository.UpdateAsync(budgetaryFund);
+                var tmpTransaction = route.Receiver.Transactions.Find(t => t.RelationId == item.RelationId);
 
-            return isUpdated.Result;
+                if (route.Receiver.Transactions.Remove(route.Receiver.Transactions.Find(t => t.RelationId == item.RelationId)))
+                {
 
+                    var reverseTransation = (Transaction)item.Clone();
+
+                    reverseTransation.Id = tmpTransaction.Id;
+
+                    reverseTransation.TypeTransaction = item.GetReverseType();
+
+                    route.Receiver.Transactions.Add(reverseTransation);
+
+                    await _transationRepository.UpdateAsync(reverseTransation);
+
+                    await _budgetaryFundRepository.UpdateAsync(route.Receiver);
+                }
+
+                else
+                    return false;
+
+            }
+
+            if (route.Source.Transactions.Remove(route.Source.Transactions.Find(t => t.RelationId == item.RelationId)))
+            {
+
+                route.Source.Transactions.Add(item);
+
+
+                return await _transationRepository.UpdateAsync(item) &&
+                    await _budgetaryFundRepository.UpdateAsync(route.Source) ?
+                    true : false;
+            }
+
+            else
+                return false;
+                                 
+                
         }
                 
+        public async Task<bool> DeleteAsync(Transaction item, TransactionRoute route)
+        {
 
+            if (!route.IsEqual())
+            {
+
+                var tmpTransaction = route.Receiver.Transactions.Find(t => t.RelationId == item.RelationId);
+
+                if (route.Receiver.Transactions.Remove(route.Receiver.Transactions.Find(t => t.RelationId == item.RelationId)))
+                {
+
+                    await _transationRepository.DeleteAsync(tmpTransaction.Id);
+
+                    await _budgetaryFundRepository.UpdateAsync(route.Receiver);
+                }
+
+                else
+                    return false;
+            }
+
+            if (route.Source.Transactions.Remove(route.Source.Transactions.Find(t => t.RelationId == item.RelationId)))
+            {
+
+                await _budgetaryFundRepository.UpdateAsync(route.Source);
+
+                return await _transationRepository.DeleteAsync(item.Id);
+
+            }
+
+            else
+                return false;
+
+
+
+        }
 
 
         private readonly IRepository<BudgetaryFund> _budgetaryFundRepository;

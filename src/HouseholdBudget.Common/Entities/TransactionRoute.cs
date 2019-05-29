@@ -13,8 +13,8 @@ namespace HouseholdBudget.Common.Entities
 
         }
 
-        public int GetDistance() =>
-            Source.Name == Receiver.Name ? 0 : 1;
+        public bool IsEqual() =>
+            Source.Name == Receiver.Name && Receiver != null ? true : false;
         
 
         public BudgetaryFund Source { get;  }

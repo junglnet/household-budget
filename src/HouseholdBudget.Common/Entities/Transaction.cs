@@ -42,6 +42,9 @@ namespace HouseholdBudget.Common.Entities
         public decimal GetOperation() =>
             TypeTransaction.GetOperation(this);
 
+        public ITypeTransaction GetReverseType() =>
+            TypeTransaction.GetReverseType();
+
         public object Clone() =>
             this.MemberwiseClone();
 
@@ -55,6 +58,7 @@ namespace HouseholdBudget.Common.Entities
 
         }
               
+        public string RelationId { get; set; }
 
         /// <summary>
         /// Плановая сумма транзации
