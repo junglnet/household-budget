@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using HouseholdBudget.Common.Entities;
 using HouseholdBudget.Common.Interfaces;
@@ -7,7 +8,7 @@ namespace HouseholdBudget.ConsoleTest
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
 
             var b1 = new BudgetaryFund()

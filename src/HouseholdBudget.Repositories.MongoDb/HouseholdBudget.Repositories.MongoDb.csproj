@@ -66,8 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityRepositories\MongoTransactionRepository.cs" />
+    <Compile Include="EntityRepositories\MongoBudgetaryFundRepository.cs" />
+    <Compile Include="Extentions.cs" />
     <Compile Include="MongoRepositoriesBundle.cs" />
     <Compile Include="MongoRepository.cs" />
+    <Compile Include="MongoTypeTransactionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +82,10 @@
     <ProjectReference Include="..\HouseholdBudget.Common\HouseholdBudget.Common.csproj">
       <Project>{c88253bb-c8c7-4d82-bedd-6046bd88a196}</Project>
       <Name>HouseholdBudget.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HouseHoldBudget.DTO\HouseholdBudget.DTO.csproj">
+      <Project>{dd60cd4c-06b7-415f-85fd-84e1a4c7bd7c}</Project>
+      <Name>HouseholdBudget.DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

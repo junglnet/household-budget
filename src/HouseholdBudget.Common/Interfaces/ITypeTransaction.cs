@@ -1,5 +1,5 @@
 ﻿using HouseholdBudget.Common.Entities;
-using System.Threading.Tasks;
+using System;
 
 namespace HouseholdBudget.Common.Interfaces
 {
@@ -9,7 +9,9 @@ namespace HouseholdBudget.Common.Interfaces
         decimal GetOperation (Transaction transaction);
         ITypeTransaction GetReverseType();
 
+        string Id { get; set; }
         string Name { get; set; }
+
     }
 
 }

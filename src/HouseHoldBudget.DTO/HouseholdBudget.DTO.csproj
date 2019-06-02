@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C88253BB-C8C7-4D82-BEDD-6046BD88A196}</ProjectGuid>
+    <ProjectGuid>{DD60CD4C-06B7-415F-85FD-84E1A4C7BD7C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HouseholdBudget.Common</RootNamespace>
-    <AssemblyName>HouseholdBudget.Common</AssemblyName>
+    <RootNamespace>HouseHoldBudget.DTO</RootNamespace>
+    <AssemblyName>HouseHoldBudget.DTO</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,19 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\BalanceTypeTransaction.cs" />
-    <Compile Include="Entities\BudgetaryFund.cs" />
-    <Compile Include="Entities\DictionaryBase.cs" />
-    <Compile Include="Entities\EntityBase.cs" />
-    <Compile Include="Entities\ExpenseTypeTransaction.cs" />
-    <Compile Include="Entities\IncomeTypeTransaction.cs" />
-    <Compile Include="Entities\Transaction.cs" />
-    <Compile Include="Entities\TransactionRoute.cs" />
-    <Compile Include="Entities\TransationsBalance.cs" />
-    <Compile Include="Factory.cs" />
-    <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\ITypeTransaction.cs" />
+    <Compile Include="BudgetaryFundDTO.cs" />
+    <Compile Include="Extentions.cs" />
+    <Compile Include="TransactionDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeTransactionDTO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HouseholdBudget.Common\HouseholdBudget.Common.csproj">
+      <Project>{c88253bb-c8c7-4d82-bedd-6046bd88a196}</Project>
+      <Name>HouseholdBudget.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
