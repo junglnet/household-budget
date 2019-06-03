@@ -13,7 +13,10 @@ namespace HouseholdBudget.Common
         public static Factory Current { get; protected set; }
         public abstract IRepository<BudgetaryFund> BudgetaryFundRepository { get; }
         public abstract IRepository<Transaction> TransactionRepository { get; }
-        public abstract IRepository<ITypeTransaction> TypeTransactionRepository { get; }
+        public abstract IRepository<ExpenseTypeTransaction> ExpenseTransactionRepository { get; }
+        public abstract IRepository<IncomeTypeTransaction> IncomeTransactionRepository { get; }
+        public abstract IRepository<BalanceTypeTransaction> BalanceTransactionRepository { get; }
+
 
     }
 }

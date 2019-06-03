@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using HouseholdBudget.Common.Entities;
 using HouseholdBudget.Common.Interfaces;
@@ -63,28 +61,21 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
 
             var funds = new List<BudgetaryFund>();
 
-            foreach (BudgetaryFundDTO bf in asyncCursor)
-            {
-                funds.Add(await bf.ToBudgetaryFund(_transactionRepository));
-            }
+            foreach (BudgetaryFundDTO bf in asyncCursor)            
+                funds.Add(await bf.ToBudgetaryFund(_transactionRepository));            
 
             return funds;
         }
 
 
-        public async Task<BudgetaryFund> GetByIdAsync(string id)
-        {
-
-            if (await IsExistById(id))
-
-                return await _bundle.BudgetaryFundRepository.Collection
-               .Find(s => s.Id == id).Limit(1).FirstOrDefault().ToBudgetaryFund(_transactionRepository);
-
-            else
-                return new BudgetaryFund();
-
-        }
-
+        public async Task<BudgetaryFund> GetByIdAsync(string id) =>
+            (await IsExistById(id)) ? (
+                await (
+                    await _bundle.BudgetaryFundRepository.Collection.Find(s => s.Id == id)
+                    .FirstOrDefaultAsync())
+                .ToBudgetaryFund(_transactionRepository)) 
+            : null;
+        
 
         public async Task<IReadOnlyList<BudgetaryFund>> GetByIdsAsync(string[] ids)
         {
@@ -93,8 +84,10 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
             {
                 if (await IsExistById(id))
 
-                    funds.Add(await _bundle.BudgetaryFundRepository.Collection
-                    .Find(s => s.Id == id).Limit(1).FirstAsync().Result.ToBudgetaryFund(_transactionRepository));
+                    funds.Add(
+                        await (
+                            await _bundle.BudgetaryFundRepository.Collection.Find(s => s.Id == id).FirstOrDefaultAsync())
+                        .ToBudgetaryFund(_transactionRepository));
 
             }
 

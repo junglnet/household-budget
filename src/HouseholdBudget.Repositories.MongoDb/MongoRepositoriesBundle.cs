@@ -14,14 +14,16 @@ namespace HouseholdBudget.Repositories.MongoDb
 
             TransactionRepository = new MongoRepository<TransactionDTO>("Transactions");
             BudgetaryFundRepository = new MongoRepository<BudgetaryFundDTO>("BudgetaryFunds");
-            TypeTransactionRepository = new MongoRepository<TypeTransactionDTO>("TypeTransaction");
+            ExpenseTypeTRepository = new MongoRepository<ExpenseTypeTransaction>("ExpenseTypeTransaction");
+            IncomeTypeTRepository = new MongoRepository<IncomeTypeTransaction>("IncomeTypeTransaction");
+            BalanceTypeTRepository = new MongoRepository<BalanceTypeTransaction>("BalanceTypeTransaction");
         }
 
         public MongoRepository<TransactionDTO> TransactionRepository { get; }
         public MongoRepository<BudgetaryFundDTO> BudgetaryFundRepository { get; }
-
-        public MongoRepository<TypeTransactionDTO> TypeTransactionRepository { get; }
-
+        public MongoRepository<ExpenseTypeTransaction> ExpenseTypeTRepository { get; }
+        public MongoRepository<IncomeTypeTransaction> IncomeTypeTRepository { get; }
+        public MongoRepository<BalanceTypeTransaction> BalanceTypeTRepository { get; }
 
     }
 }

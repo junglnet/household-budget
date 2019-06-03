@@ -7,8 +7,8 @@
     <ProjectGuid>{FD935A91-6656-41CF-9584-45DCEE8CF470}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BochkyOM.Repositories.MongoDb</RootNamespace>
-    <AssemblyName>BochkyOM.Repositories.MongoDb</AssemblyName>
+    <RootNamespace>HouseholdBudget.Repositories.MongoDb</RootNamespace>
+    <AssemblyName>HouseholdBudget.Repositories.MongoDb</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -65,12 +65,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityRepositories\MongoBalanceTypeTRepository.cs" />
+    <Compile Include="EntityRepositories\MongoExpenseTypeTRepository.cs" />
+    <Compile Include="EntityRepositories\MongoIncomeTypeTRepository.cs" />
     <Compile Include="EntityRepositories\MongoTransactionRepository.cs" />
     <Compile Include="EntityRepositories\MongoBudgetaryFundRepository.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="MongoRepositoriesBundle.cs" />
     <Compile Include="MongoRepository.cs" />
-    <Compile Include="MongoTypeTransactionRepository.cs" />
+    <Compile Include="MongoSimpleEntityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HouseholdBudget.Common.Entities;
@@ -13,15 +14,21 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
     {
 
         private readonly MongoRepositoriesBundle _bundle;
-        private IRepository<ITypeTransaction> _typeTransactionRepository;
+        private IRepository<ExpenseTypeTransaction> _expenceTypeTRepository;
+        private IRepository<IncomeTypeTransaction> _incomeTypeTRepository;
+        private IRepository<BalanceTypeTransaction> _balanceTypeTRepository;
 
         public MongoTransactionRepository (
             MongoRepositoriesBundle bundle,
-            IRepository<ITypeTransaction> typeTransactionRepository)
+            IRepository<ExpenseTypeTransaction> expenceTypeTRepository,
+            IRepository<IncomeTypeTransaction> incomeTypeTRepository,
+            IRepository<BalanceTypeTransaction> balanceTypeTRepository)
         {
 
             _bundle = bundle;
-            _typeTransactionRepository = typeTransactionRepository;
+            _expenceTypeTRepository = expenceTypeTRepository;
+            _incomeTypeTRepository = incomeTypeTRepository;
+            _balanceTypeTRepository = balanceTypeTRepository;
             
         }
 
@@ -54,22 +61,24 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
 
             foreach (TransactionDTO ts in asyncCursor)
             {
-                transactions.Add(await ts.ToTransaction(_typeTransactionRepository));
+                transactions.Add(
+                    await ts.ToTransaction(
+                        _expenceTypeTRepository, 
+                        _incomeTypeTRepository, 
+                        _balanceTypeTRepository));
             }
             
             return transactions;
         }
 
-        public async Task<Transaction> GetByIdAsync(string id)
-        {
-            if (await IsExistById(id))
-
-                return await _bundle.TransactionRepository.Collection
-               .Find(s => s.Id == id).Limit(1).FirstOrDefault().ToTransaction(_typeTransactionRepository);
-
-            else
-                return new Transaction();
-        }
+        public async Task<Transaction> GetByIdAsync(string id) =>
+            (await IsExistById(id)) ? (
+                await (
+                    await _bundle.TransactionRepository.Collection.Find(s => s.Id == id)
+                    .FirstOrDefaultAsync())
+                .ToTransaction(_expenceTypeTRepository, _incomeTypeTRepository, _balanceTypeTRepository)) 
+            : null;
+        
 
         public async Task<IReadOnlyList<Transaction>> GetByIdsAsync(string[] ids)
         {
@@ -78,8 +87,10 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
             {
                 if (await IsExistById(id))
 
-                    funds.Add(await _bundle.TransactionRepository.Collection
-                    .Find(s => s.Id == id).Limit(1).FirstAsync().Result.ToTransaction(_typeTransactionRepository));
+                    funds.Add(
+                        await (
+                            await _bundle.TransactionRepository.Collection.Find(s => s.Id == id).FirstOrDefaultAsync())
+                        .ToTransaction(_expenceTypeTRepository, _incomeTypeTRepository, _balanceTypeTRepository));
 
             }
 
@@ -100,20 +111,6 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
             return replaceResult.IsAcknowledged && (replaceResult.MatchedCount == 1);
         }
 
-        private async Task AddOrUpdateTransactionAsync(ITypeTransaction item)
-        {
-            if (item != null)
-            {
-
-                if (item.Id == null)
-                    await _typeTransactionRepository.AddAsync(item);
-
-                else
-                    await _typeTransactionRepository.UpdateAsync(item);
-
-
-            }
-
-        }
+        
     }
 }

@@ -19,66 +19,40 @@ namespace HouseholdBudget.Repositories.MongoDb
 
             };
 
-        public static async Task<Transaction> ToTransaction(this TransactionDTO dto,
-           IRepository<ITypeTransaction> typeTransactionRepository) => new Transaction()
+        public static async Task<Transaction> ToTransaction(
+            this TransactionDTO dto,
+            IRepository<ExpenseTypeTransaction> expenseTypeTRepository,
+            IRepository<IncomeTypeTransaction> incomeTypeTRepository,
+            IRepository<BalanceTypeTransaction> balanceTypeTRepository) 
            {
 
-               Id = dto.Id,
-               Name = dto.Name,
-               RelationId = dto.RelationId,
-               PlannedSum = dto.PlannedSum,
-               FactSum = dto.FactSum,
-               TypeTransaction = await typeTransactionRepository.GetByIdAsync(dto.Id)
-
-           };
-
-        public static async Task<ITypeTransaction> ToTypeTransaction(this TypeTransactionDTO dto)
-        {
-                        
-            var tmpType = Type.GetType(dto.Type);
-            ////Console.WriteLine(tmpType);
-            //var instance = Activator.CreateInstance(tmpType);
-
-            //FieldInfo idField = tmpType.GetField("Id");
-            //FieldInfo nameField = tmpType.GetField("Name");
-
-            //idField.SetValue(instance, dto.Id);
-            //nameField.SetValue(instance, dto.Name);
-
-            //return (ITypeTransaction)instance;
-
-
-            if (tmpType == typeof(BalanceTypeTransaction))
+            var tmpTransaction = new Transaction()
             {
-                return new BalanceTypeTransaction()
-                {
-                    Id = dto.Id,
-                    Name = dto.Name
-                };
-            }
 
-            if (tmpType == typeof(ExpenseTypeTransaction))
-            {
-                return new ExpenseTypeTransaction()
-                {
-                    Id = dto.Id,
-                    Name = dto.Name
-                };
-            }
+                Id = dto.Id,
+                Name = dto.Name,
+                RelationId = dto.RelationId,
+                PlannedSum = dto.PlannedSum,
+                FactSum = dto.FactSum
 
-            if (tmpType == typeof(IncomeTypeTransaction))
-            {
-                return new IncomeTypeTransaction()
-                {
-                    Id = dto.Id,
-                    Name = dto.Name
-                };
-            }
+            };
+
+            if (await expenseTypeTRepository.IsExistById(dto.TypeTransactionId))
+                tmpTransaction.TypeTransaction = await expenseTypeTRepository.GetByIdAsync(dto.TypeTransactionId);
+
+            if (await incomeTypeTRepository.IsExistById(dto.TypeTransactionId))
+                tmpTransaction.TypeTransaction = await incomeTypeTRepository.GetByIdAsync(dto.TypeTransactionId);
+
+            if (await balanceTypeTRepository.IsExistById(dto.TypeTransactionId))
+                tmpTransaction.TypeTransaction = await balanceTypeTRepository.GetByIdAsync(dto.TypeTransactionId);
 
             else
-                return null;
+                tmpTransaction.TypeTransaction = null;
 
-        }
+            return tmpTransaction;
+               
+
+           }        
 
     }
 }

@@ -18,10 +18,16 @@ namespace HouseholdBudget.ConsoleTest
 
             MongoRepositoriesBundle bundle = new MongoRepositoriesBundle();
 
-            var typeTransactionRepository = new MongoTypeTransactionRepository(bundle);
-            TypeTransactionRepository = typeTransactionRepository;
+            var expenseTransactionRepository = new MongoExpenseTypeTRepository(bundle);
+            ExpenseTransactionRepository = expenseTransactionRepository;
 
-            var transactionRepository = new MongoTransactionRepository(bundle, TypeTransactionRepository);
+            var incomeTransactionRepository = new MongoIncomeTypeTRepository(bundle);
+            IncomeTransactionRepository = incomeTransactionRepository;
+
+            var balanceTransactionRepository = new MongoBalanceTypeTRepository(bundle);
+            BalanceTransactionRepository = balanceTransactionRepository;
+
+            var transactionRepository = new MongoTransactionRepository(bundle, );
             TransactionRepository = transactionRepository;
 
             var budgetaryFundRepository = new MongoBudgetaryFundRepository(bundle, TransactionRepository);
@@ -35,7 +41,9 @@ namespace HouseholdBudget.ConsoleTest
         #region Overrides of Factory
         public override IRepository<BudgetaryFund> BudgetaryFundRepository { get; }
         public override IRepository<Transaction> TransactionRepository { get; }
-        public override IRepository<ITypeTransaction> TypeTransactionRepository { get; }
+        public override IRepository<ExpenseTypeTransaction> ExpenseTransactionRepository { get; }
+        public override IRepository<IncomeTypeTransaction> IncomeTransactionRepository { get; }
+        public override IRepository<BalanceTypeTransaction> BalanceTransactionRepository { get; }
         #endregion
 
     }
