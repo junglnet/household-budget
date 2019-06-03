@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using HouseholdBudget.Common.Entities;
 using HouseholdBudget.Common.Interfaces;
@@ -36,17 +34,30 @@ namespace HouseholdBudget.Repositories.MongoDb
 
         public static async Task<ITypeTransaction> ToTypeTransaction(this TypeTransactionDTO dto)
         {
-                      
-            if (dto.Type == typeof(BalanceTypeTransaction))
+                        
+            var tmpType = Type.GetType(dto.Type);
+            ////Console.WriteLine(tmpType);
+            //var instance = Activator.CreateInstance(tmpType);
+
+            //FieldInfo idField = tmpType.GetField("Id");
+            //FieldInfo nameField = tmpType.GetField("Name");
+
+            //idField.SetValue(instance, dto.Id);
+            //nameField.SetValue(instance, dto.Name);
+
+            //return (ITypeTransaction)instance;
+
+
+            if (tmpType == typeof(BalanceTypeTransaction))
             {
                 return new BalanceTypeTransaction()
                 {
                     Id = dto.Id,
                     Name = dto.Name
-                };    
+                };
             }
 
-            if (dto.Type == typeof(ExpenseTypeTransaction))
+            if (tmpType == typeof(ExpenseTypeTransaction))
             {
                 return new ExpenseTypeTransaction()
                 {
@@ -55,7 +66,7 @@ namespace HouseholdBudget.Repositories.MongoDb
                 };
             }
 
-            if (dto.Type == typeof(IncomeTypeTransaction))
+            if (tmpType == typeof(IncomeTypeTransaction))
             {
                 return new IncomeTypeTransaction()
                 {

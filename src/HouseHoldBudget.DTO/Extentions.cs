@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using HouseholdBudget.Common.Entities;
 using HouseholdBudget.Common.Interfaces;
 
@@ -37,7 +33,7 @@ namespace HouseholdBudget.DTO
         {
             Id = item.Id,
             Name = item.Name,
-            Type = item.GetType()
+            Type = item.GetType().AssemblyQualifiedName.ToString()
 
         };
 

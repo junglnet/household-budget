@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HouseholdBudget.Common.Entities;
@@ -25,8 +26,7 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
         public async Task<string> AddAsync(ITypeTransaction item)
         {
             item.Id = ObjectId.GenerateNewId().ToString();
-            await _bundle.TypeTransactionRepository.Collection.InsertOneAsync(item.ToDto());
-
+            await _bundle.TypeTransactionRepository.Collection.InsertOneAsync(item.ToDto());            
             return item.Id;
         }
 

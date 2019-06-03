@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using HouseholdBudget.Common.Entities;
+﻿using HouseholdBudget.Common.Entities;
 using HouseholdBudget.Common.Interfaces;
 using HouseholdBudget.Common;
 using HouseholdBudget.Repositories.MongoDb;

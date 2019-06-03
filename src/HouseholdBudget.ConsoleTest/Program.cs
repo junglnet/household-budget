@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using HouseholdBudget.Common.Entities;
 using HouseholdBudget.Common.Interfaces;
+using HouseholdBudget.Common;
 
 namespace HouseholdBudget.ConsoleTest
 {
@@ -11,18 +11,34 @@ namespace HouseholdBudget.ConsoleTest
         static async Task Main(string[] args)
         {
 
-            var b1 = new BudgetaryFund()
+            try
             {
-                Name = "Test1"
-            };
+                AppFactoty.Init();
 
-            var b2 = new BudgetaryFund()
+                var t1Type = new ExpenseTypeTransaction()
+                {
+                    Name = "Оплата квартплаты"
+                };
+
+                var t2Type = new IncomeTypeTransaction()
+                {
+                    Name = "Зачисление ЗП"
+                };
+
+
+                Console.WriteLine(await Factory.Current.TypeTransactionRepository.AddAsync(t1Type));
+                Console.WriteLine(await Factory.Current.TypeTransactionRepository.AddAsync(t2Type));
+
+                foreach (ITypeTransaction tt in await Factory.Current.TypeTransactionRepository.GetAllAsync())
+                    Console.WriteLine("{0} | {1} ", tt.Name, tt.GetType());
+
+            }
+
+            catch (Exception ex)
             {
-                Name = "Test1"
-            };
 
-            if (b1.Name != b1.Name ) Console.WriteLine("не равно");
-            else Console.WriteLine("равно");
+                Console.WriteLine(ex.Message);
+            }
 
             Console.WriteLine("Waiting any key...");
             Console.ReadLine();

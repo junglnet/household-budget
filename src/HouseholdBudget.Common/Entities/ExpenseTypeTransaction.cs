@@ -1,5 +1,4 @@
 ﻿using HouseholdBudget.Common.Interfaces;
-using System.Threading.Tasks;
 
 namespace HouseholdBudget.Common.Entities
 {
