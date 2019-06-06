@@ -29,13 +29,5 @@ namespace HouseholdBudget.DTO
 
         };
 
-        public static TypeTransactionDTO ToDto(this ITypeTransaction item) => new TypeTransactionDTO()
-        {
-            Id = item.Id,
-            Name = item.Name,
-            Type = item.GetType().AssemblyQualifiedName.ToString()
-
-        };
-
     }
 }

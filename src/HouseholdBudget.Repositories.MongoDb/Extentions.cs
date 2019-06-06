@@ -38,21 +38,33 @@ namespace HouseholdBudget.Repositories.MongoDb
             };
 
             if (await expenseTypeTRepository.IsExistById(dto.TypeTransactionId))
+            {
                 tmpTransaction.TypeTransaction = await expenseTypeTRepository.GetByIdAsync(dto.TypeTransactionId);
+                return tmpTransaction;
+            }
+                
 
             if (await incomeTypeTRepository.IsExistById(dto.TypeTransactionId))
+            {
                 tmpTransaction.TypeTransaction = await incomeTypeTRepository.GetByIdAsync(dto.TypeTransactionId);
+                return tmpTransaction;
+            }
+                
 
             if (await balanceTypeTRepository.IsExistById(dto.TypeTransactionId))
+            {
                 tmpTransaction.TypeTransaction = await balanceTypeTRepository.GetByIdAsync(dto.TypeTransactionId);
+                return tmpTransaction;
+            }
+                
 
             else
                 tmpTransaction.TypeTransaction = null;
 
             return tmpTransaction;
-               
 
-           }        
+
+        }        
 
     }
 }

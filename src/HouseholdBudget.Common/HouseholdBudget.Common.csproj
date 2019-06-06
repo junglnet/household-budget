@@ -52,6 +52,8 @@
     <Compile Include="Entities\TransactionRoute.cs" />
     <Compile Include="Entities\TransationsBalance.cs" />
     <Compile Include="Factory.cs" />
+    <Compile Include="Interfaces\IEntityEditService.cs" />
+    <Compile Include="Interfaces\IEntityReadService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ITypeTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -27,7 +27,11 @@ namespace HouseholdBudget.ConsoleTest
             var balanceTransactionRepository = new MongoBalanceTypeTRepository(bundle);
             BalanceTransactionRepository = balanceTransactionRepository;
 
-            var transactionRepository = new MongoTransactionRepository(bundle, );
+            var transactionRepository = new MongoTransactionRepository(
+                bundle, 
+                ExpenseTransactionRepository, 
+                IncomeTransactionRepository, 
+                BalanceTransactionRepository);
             TransactionRepository = transactionRepository;
 
             var budgetaryFundRepository = new MongoBudgetaryFundRepository(bundle, TransactionRepository);

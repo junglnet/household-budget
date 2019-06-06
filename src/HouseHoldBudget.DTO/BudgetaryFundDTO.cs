@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using HouseholdBudget.Common.Entities;
+﻿using HouseholdBudget.Common.Entities;
 
 namespace HouseholdBudget.DTO
 {
