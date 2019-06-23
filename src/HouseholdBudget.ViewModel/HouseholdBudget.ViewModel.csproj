@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DD60CD4C-06B7-415F-85FD-84E1A4C7BD7C}</ProjectGuid>
+    <ProjectGuid>{57E8DE5F-999A-430B-9691-485210DEBF16}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HouseholdBudget.DTO</RootNamespace>
-    <AssemblyName>HouseholdBudget.DTO</AssemblyName>
+    <RootNamespace>HouseholdBudget.ViewModel</RootNamespace>
+    <AssemblyName>HouseholdBudget.ViewModel</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,17 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FundDTO.cs" />
-    <Compile Include="Extentions.cs" />
-    <Compile Include="TransactionDTO.cs" />
+    <Compile Include="AppFactoty.cs" />
+    <Compile Include="AppMainWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TransactionRouteDTO.cs" />
-    <Compile Include="TransactionTypeDTO.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HouseholdBudget.BL\HouseholdBudget.BL.csproj">
+      <Project>{bf60cf87-1626-4854-8458-391f20e8c01a}</Project>
+      <Name>HouseholdBudget.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HouseholdBudget.Common\HouseholdBudget.Common.csproj">
       <Project>{c88253bb-c8c7-4d82-bedd-6046bd88a196}</Project>
       <Name>HouseholdBudget.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HouseholdBudget.Repositories.MongoDb\HouseholdBudget.Repositories.MongoDb.csproj">
+      <Project>{fd935a91-6656-41cf-9584-45dcee8cf470}</Project>
+      <Name>HouseholdBudget.Repositories.MongoDb</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

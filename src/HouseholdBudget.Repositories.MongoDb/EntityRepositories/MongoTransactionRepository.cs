@@ -14,21 +14,17 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
     {
 
         private readonly MongoRepositoriesBundle _bundle;
-        private IRepository<ExpenseTypeTransaction> _expenceTypeTRepository;
-        private IRepository<IncomeTypeTransaction> _incomeTypeTRepository;
-        private IRepository<BalanceTypeTransaction> _balanceTypeTRepository;
+        private IRepository<TransactionType> _transactionTypeRepository;
+       
 
         public MongoTransactionRepository (
             MongoRepositoriesBundle bundle,
-            IRepository<ExpenseTypeTransaction> expenceTypeTRepository,
-            IRepository<IncomeTypeTransaction> incomeTypeTRepository,
-            IRepository<BalanceTypeTransaction> balanceTypeTRepository)
+            IRepository<TransactionType> transactionTypeRepository)
         {
 
             _bundle = bundle;
-            _expenceTypeTRepository = expenceTypeTRepository;
-            _incomeTypeTRepository = incomeTypeTRepository;
-            _balanceTypeTRepository = balanceTypeTRepository;
+            _transactionTypeRepository = transactionTypeRepository;
+            
             
         }
 
@@ -62,10 +58,7 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
             foreach (TransactionDTO ts in asyncCursor)
             {
                 transactions.Add(
-                    await ts.ToTransaction(
-                        _expenceTypeTRepository, 
-                        _incomeTypeTRepository, 
-                        _balanceTypeTRepository));
+                    await ts.ToTransaction(_transactionTypeRepository));
             }
             
             return transactions;
@@ -76,7 +69,7 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
                 await (
                     await _bundle.TransactionRepository.Collection.Find(s => s.Id == id)
                     .FirstOrDefaultAsync())
-                .ToTransaction(_expenceTypeTRepository, _incomeTypeTRepository, _balanceTypeTRepository)) 
+                .ToTransaction(_transactionTypeRepository)) 
             : null;
         
 
@@ -90,7 +83,7 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
                     funds.Add(
                         await (
                             await _bundle.TransactionRepository.Collection.Find(s => s.Id == id).FirstOrDefaultAsync())
-                        .ToTransaction(_expenceTypeTRepository, _incomeTypeTRepository, _balanceTypeTRepository));
+                        .ToTransaction(_transactionTypeRepository));
 
             }
 

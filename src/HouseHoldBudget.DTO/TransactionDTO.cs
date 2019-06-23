@@ -9,6 +9,6 @@ namespace HouseholdBudget.DTO
         public decimal PlannedSum { get; set; }
         public decimal FactSum { get; set; }
         public DateTime DateTime { get; set; }
-        public string TypeTransactionId { get; set; }
+        public string TransactionTypeId { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace HouseholdBudget.Common.Interfaces
 
         Task<TEntity> GetOneAsync(string id);
         Task<IReadOnlyList<TEntity>> GetManyAsync(string[] ids);
+        Task<IReadOnlyList<TEntity>> GetAllAsync();
 
     }
 }

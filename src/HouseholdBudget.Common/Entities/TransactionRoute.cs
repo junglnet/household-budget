@@ -2,24 +2,17 @@
 
 namespace HouseholdBudget.Common.Entities
 {
-    public class TransactionRoute
+    public class TransactionRoute : EntityBase
     {
 
-        public TransactionRoute(BudgetaryFund source, BudgetaryFund receiver)
-        {
-
-            Source = source;
-            Receiver = receiver;
-
-        }
-
-        public bool IsEqual() =>
-            Source.Name == Receiver.Name && Receiver != null ? true : false;
+        public bool IsEqualFunds() =>
+            SourceFund.Name == ReceiverFund.Name && ReceiverFund != null ? true : false;
         
+        public Transaction SourceTransaction { get; set; }
+        public Transaction ReceiverTransaction { get; set; }
+        public Fund SourceFund { get; set; }
 
-        public BudgetaryFund Source { get;  }
-
-        public BudgetaryFund Receiver { get; }
+        public Fund ReceiverFund { get; set; }
 
     }
 }

@@ -9,21 +9,22 @@ namespace HouseholdBudget.Repositories.MongoDb
     public class MongoRepositoriesBundle
     {
          
-         public MongoRepositoriesBundle()
+         public MongoRepositoriesBundle(
+             string connectionString,
+             string databaseName)
         {
 
-            TransactionRepository = new MongoRepository<TransactionDTO>("Transactions");
-            BudgetaryFundRepository = new MongoRepository<BudgetaryFundDTO>("BudgetaryFunds");
-            ExpenseTypeTRepository = new MongoRepository<ExpenseTypeTransaction>("ExpenseTypeTransaction");
-            IncomeTypeTRepository = new MongoRepository<IncomeTypeTransaction>("IncomeTypeTransaction");
-            BalanceTypeTRepository = new MongoRepository<BalanceTypeTransaction>("BalanceTypeTransaction");
+            TransactionRepository = new MongoRepository<TransactionDTO>("Transactions", connectionString, databaseName);
+            FundRepository = new MongoRepository<FundDTO>("Funds", connectionString, databaseName);
+            TransactionTypeRepository = new MongoRepository<TransactionTypeDTO>("TransactionType", connectionString, databaseName);
+            TransactionRouteRepository = new MongoRepository<TransactionRouteDTO>("TransactionRoute", connectionString, databaseName);
         }
 
         public MongoRepository<TransactionDTO> TransactionRepository { get; }
-        public MongoRepository<BudgetaryFundDTO> BudgetaryFundRepository { get; }
-        public MongoRepository<ExpenseTypeTransaction> ExpenseTypeTRepository { get; }
-        public MongoRepository<IncomeTypeTransaction> IncomeTypeTRepository { get; }
-        public MongoRepository<BalanceTypeTransaction> BalanceTypeTRepository { get; }
+        public MongoRepository<FundDTO> FundRepository { get; }
+        public MongoRepository<TransactionRouteDTO> TransactionRouteRepository { get; set; }
+        public MongoRepository<TransactionTypeDTO> TransactionTypeRepository { get; }
+       
 
     }
 }

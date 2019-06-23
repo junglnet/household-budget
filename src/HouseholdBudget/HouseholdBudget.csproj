@@ -121,5 +121,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HouseholdBudget.ViewModel\HouseholdBudget.ViewModel.csproj">
+      <Project>{57e8de5f-999a-430b-9691-485210debf16}</Project>
+      <Name>HouseholdBudget.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

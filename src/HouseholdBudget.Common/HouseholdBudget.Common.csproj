@@ -42,20 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\BalanceTypeTransaction.cs" />
-    <Compile Include="Entities\BudgetaryFund.cs" />
+    <Compile Include="Entities\Fund.cs" />
     <Compile Include="Entities\DictionaryBase.cs" />
     <Compile Include="Entities\EntityBase.cs" />
-    <Compile Include="Entities\ExpenseTypeTransaction.cs" />
-    <Compile Include="Entities\IncomeTypeTransaction.cs" />
     <Compile Include="Entities\Transaction.cs" />
     <Compile Include="Entities\TransactionRoute.cs" />
+    <Compile Include="Entities\TransactionType.cs" />
     <Compile Include="Entities\TransationsBalance.cs" />
     <Compile Include="Factory.cs" />
+    <Compile Include="Interfaces\IFundService.cs" />
     <Compile Include="Interfaces\IEntityEditService.cs" />
     <Compile Include="Interfaces\IEntityReadService.cs" />
+    <Compile Include="Interfaces\IMarkToDelete.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\ITypeTransaction.cs" />
+    <Compile Include="Interfaces\ITransactionRouteService.cs" />
+    <Compile Include="Interfaces\ITransactionService.cs" />
+    <Compile Include="Interfaces\ITransactionTypeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

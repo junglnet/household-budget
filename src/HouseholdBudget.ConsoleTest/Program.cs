@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static System.Console;
 using HouseholdBudget.Common.Entities;
 using HouseholdBudget.Common.Interfaces;
 using HouseholdBudget.Common;
+using HouseholdBudget.BL;
 
 namespace HouseholdBudget.ConsoleTest
 {
@@ -16,61 +18,91 @@ namespace HouseholdBudget.ConsoleTest
             {
                 AppFactoty.Init();
 
-                var t1Type = new ExpenseTypeTransaction()
+                var t1TranType = new TransactionType()
                 {
-                    Name = "Оплата квартплаты"
-                };
-
-                var t2Type = new IncomeTypeTransaction()
-                {
-                    Name = "Зачисление ЗП"
-                };
-
-                Factory.Current.ExpenseTransactionRepository.AddAsync(t1Type);
-                Factory.Current.IncomeTransactionRepository.AddAsync(t2Type);
-
-                var t1transac = new Transaction()
-                {
-                   PlannedSum = 33333,
-                   FactSum = 4444,
-                   TypeTransaction = t1Type,
-                   Name = t1Type.Name
+                    Name = "Перевод со счета",
+                    TypeStatus = TypeStatuses.Expense                    
 
                 };
 
-                var t2transac = new Transaction()
+                await Factory.Current.TransctionTypeRepository.AddAsync(t1TranType);
+                var t2TranType = new TransactionType()
                 {
-                    PlannedSum = 221,
-                    FactSum = 4333444,
-                    TypeTransaction = t2Type,
-                    Name = t2Type.Name
+
+                    Name = "Перевод на счет",
+                    TypeStatus = TypeStatuses.Income,
+                    ReverseType = t1TranType
 
                 };
 
-                var b1Fund = new BudgetaryFund()
+                await Factory.Current.TransctionTypeRepository.AddAsync(t2TranType);
+
+                var fund1 = new Fund()
                 {
-                    Name = "Main Fund",
+                    Name = "Основной фонд",
                     Transactions = new List<Transaction>()
                     {
-                        t1transac,
-                        t2transac
+                        new Transaction()
+                        {
+                            PlannedSum = 999,
+                            FactSum = 999,
+                            TransactionType = t1TranType,
+                            Name = t1TranType.Name
+                        }
                     }
 
                 };
 
-                var bid = await Factory.Current.BudgetaryFundRepository.AddAsync(b1Fund);
-                var btmp = await Factory.Current.BudgetaryFundRepository.GetByIdAsync(bid);
-                Console.ReadLine();
+                var fund2 = new Fund()
+                {
+                    Name = "фонд",
+                    
+
+                };
+
+                WriteLine("Сохранен фонд {0}", await Factory.Current.FundService.SaveAsync(fund1));
+                WriteLine("Сохранен фонд {0}", await Factory.Current.FundService.SaveAsync(fund2));
+
+                var t1Transaction = new Transaction()
+                {
+
+                    PlannedSum = 100,
+                    FactSum = 110,
+                    TransactionType = t2TranType                    
+
+                };
+
+                var fundEditOperationLayer = new FundEditOperationLayer(
+                    Factory.Current.TransactionService, 
+                    Factory.Current.FundService, 
+                    Factory.Current.TransactionRouteEditService);
+
+                ;
+
+                var result = await fundEditOperationLayer.SaveTransactionToFundAsync(t1Transaction, fund1, fund2);
+
+                WriteLine(result);
+                // WriteLine(t1Transaction.Id);
+                ReadLine();
+
+                t1Transaction.PlannedSum = 777000;
+
+                var гзвResult = await fundEditOperationLayer.UpdateTransactionInFundAsync(t1Transaction);
+
+                WriteLine(гзвResult);
             }
 
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message);
+                WriteLine(ex.Message);
+                WriteLine(ex.TargetSite);
+               
+
             }
 
-            Console.WriteLine("Waiting any key...");
-            Console.ReadLine();
+            WriteLine("Waiting any key...");
+            ReadLine();
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using System.Linq;
 using HouseholdBudget.Common.Entities;
-using HouseholdBudget.Common.Interfaces;
 
 namespace HouseholdBudget.DTO
 {
     public static class Extentions
     {
 
-        public static BudgetaryFundDTO ToDto(this BudgetaryFund item) => new BudgetaryFundDTO()
+        public static FundDTO ToDto(this Fund item) => new FundDTO()
         {
             Id = item.Id,
             Name = item.Name,
@@ -20,12 +19,30 @@ namespace HouseholdBudget.DTO
         {
 
             Id = item.Id,
-            Name = item.Name,
-            RelationId = item.RelationId,
+            Name = item.Name,            
             PlannedSum = item.PlannedSum,
             FactSum = item.FactSum,
             DateTime = item.DateTime,
-            TypeTransactionId = item.TypeTransaction.Id
+            TransactionTypeId = item.TransactionType.Id
+
+        };
+
+        public static TransactionRouteDTO ToDto(this TransactionRoute item) => new TransactionRouteDTO()
+        {
+            Id = item.Id,
+            SourceTransactionId = item.SourceTransaction.Id,
+            ReceiverTransactionId = item.ReceiverTransaction?.Id,
+            SourceFundId = item.SourceFund.Id,
+            ReceiverFundId = item.ReceiverFund?.Id
+        };
+
+        public static TransactionTypeDTO ToDto(this TransactionType item) => new TransactionTypeDTO()
+        {
+
+            Id = item.Id,
+            Name = item.Name,
+            ReverseTypeId = item.ReverseType == null ? null : item.ReverseType.Id,
+            TypeStatusId = (int)item.TypeStatus
 
         };
 

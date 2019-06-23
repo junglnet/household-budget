@@ -65,11 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityRepositories\MongoBalanceTypeTRepository.cs" />
-    <Compile Include="EntityRepositories\MongoExpenseTypeTRepository.cs" />
-    <Compile Include="EntityRepositories\MongoIncomeTypeTRepository.cs" />
+    <Compile Include="EntityRepositories\MongoTransactionTypeRepository.cs" />
     <Compile Include="EntityRepositories\MongoTransactionRepository.cs" />
-    <Compile Include="EntityRepositories\MongoBudgetaryFundRepository.cs" />
+    <Compile Include="EntityRepositories\MongoFundRepository.cs" />
+    <Compile Include="EntityRepositories\MongoTransactionRouteRepository.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="MongoRepositoriesBundle.cs" />
     <Compile Include="MongoRepository.cs" />

@@ -4,16 +4,17 @@ using HouseholdBudget.Common.Interfaces;
 
 namespace HouseholdBudget.Common.Entities
 {
-    public class BudgetaryFund : DictionaryBase
+    public class Fund : DictionaryBase
     {
 
-        public BudgetaryFund()
+        public Fund()
         {
 
             Transactions = new List<Transaction>();            
                 
         }
-
+        public void AddTransaction(Transaction item) =>
+            Transactions.Add(item);
         
         public string Description { get; set; }
 

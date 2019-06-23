@@ -5,7 +5,7 @@ using HouseholdBudget.BL;
 using HouseholdBudget.Repositories.MongoDb;
 using HouseholdBudget.Repositories.MongoDb.EntityRepositories;
 
-namespace HouseholdBudget.ConsoleTest
+namespace HouseholdBudget.ViewModel
 {
     public class AppFactoty : Factory
     {
@@ -21,7 +21,7 @@ namespace HouseholdBudget.ConsoleTest
 
             var transctionTypeRepository = new MongoTransactionTypeRepository(bundle);
             TransctionTypeRepository = transctionTypeRepository;
-                       
+
 
             var transactionRepository = new MongoTransactionRepository(
                 bundle,
@@ -32,8 +32,8 @@ namespace HouseholdBudget.ConsoleTest
             FundRepository = fundRepository;
 
             var transactionRouteRepository = new MongoTransactionRouteRepository(
-                bundle, 
-                TransactionRepository, 
+                bundle,
+                TransactionRepository,
                 FundRepository);
 
             TransactionRouteRepository = transactionRouteRepository;
@@ -47,23 +47,22 @@ namespace HouseholdBudget.ConsoleTest
             var transactionRouteEditService = new TransactionRouteService(transactionRouteRepository);
             TransactionRouteEditService = transactionRouteEditService;
 
-            
+
         }
 
         internal static void Init()
         {
         }
 
-       
+
         #region Overrides of Factory
         public override IRepository<Fund> FundRepository { get; }
         public override IRepository<Transaction> TransactionRepository { get; }
-        public override IRepository<TransactionType> TransctionTypeRepository { get; }        
+        public override IRepository<TransactionType> TransctionTypeRepository { get; }
         public override IRepository<TransactionRoute> TransactionRouteRepository { get; }
         public override ITransactionService TransactionService { get; }
         public override IFundService FundService { get; }
         public override ITransactionRouteService TransactionRouteEditService { get; }
         #endregion
-
     }
 }

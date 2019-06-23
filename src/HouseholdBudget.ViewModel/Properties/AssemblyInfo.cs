@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанные со сборкой.
-[assembly: AssemblyTitle("HouseholdBudget.DTO")]
+[assembly: AssemblyTitle("HouseholdBudget.ViewModel")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HouseholdBudget.DTO")]
+[assembly: AssemblyProduct("HouseholdBudget.ViewModel")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("dd60cd4c-06b7-415f-85fd-84e1a4c7bd7c")]
+[assembly: Guid("57e8de5f-999a-430b-9691-485210debf16")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //

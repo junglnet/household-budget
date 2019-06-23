@@ -5,9 +5,9 @@ namespace HouseholdBudget.Common.Entities
     {
 
         public Transaction Transaction { get; set; }
-        public BudgetaryFund SourceBudgetaryFund {get; set;}
+        public Fund SourceFund {get; set;}
 
-        public BudgetaryFund ReceiverBudgetaryFund { get; set; }
+        public Fund ReceiverFund { get; set; }
 
         public decimal TransationBalance { get; set; }
 

@@ -9,8 +9,9 @@ namespace HouseholdBudget.Repositories.MongoDb
 {
     public static class Extentions
     {
-        public static async Task<BudgetaryFund> ToBudgetaryFund(this BudgetaryFundDTO dto,
-            IRepository<Transaction> transactionsRepository) => new BudgetaryFund()
+        public static async Task<Fund> ToFund(
+            this FundDTO dto,
+            IRepository<Transaction> transactionsRepository) => new Fund()
             {
                 Id = dto.Id,
                 Name = dto.Name,
@@ -21,50 +22,43 @@ namespace HouseholdBudget.Repositories.MongoDb
 
         public static async Task<Transaction> ToTransaction(
             this TransactionDTO dto,
-            IRepository<ExpenseTypeTransaction> expenseTypeTRepository,
-            IRepository<IncomeTypeTransaction> incomeTypeTRepository,
-            IRepository<BalanceTypeTransaction> balanceTypeTRepository) 
-           {
-
-            var tmpTransaction = new Transaction()
+            IRepository<TransactionType> transactionTypeRepository) => new Transaction()
             {
 
                 Id = dto.Id,
                 Name = dto.Name,
-                RelationId = dto.RelationId,
+                DateTime = dto.DateTime,
                 PlannedSum = dto.PlannedSum,
-                FactSum = dto.FactSum
+                FactSum = dto.FactSum,                
+                TransactionType = await transactionTypeRepository.GetByIdAsync(dto.TransactionTypeId)
 
             };
+       
 
-            if (await expenseTypeTRepository.IsExistById(dto.TypeTransactionId))
+       
+
+        public static async Task<TransactionRoute> ToTransactionRoute(
+            this TransactionRouteDTO dto,
+            IRepository<Transaction> transactionsRepository,
+            IRepository<Fund> fundRepositiry) => new TransactionRoute()
             {
-                tmpTransaction.TypeTransaction = await expenseTypeTRepository.GetByIdAsync(dto.TypeTransactionId);
-                return tmpTransaction;
-            }
-                
+                Id = dto.Id,
+                SourceTransaction = await transactionsRepository.GetByIdAsync(dto.SourceTransactionId),
+                ReceiverTransaction = await transactionsRepository.GetByIdAsync(dto.ReceiverTransactionId),
+                SourceFund = await fundRepositiry.GetByIdAsync(dto.SourceFundId),
+                ReceiverFund = await  fundRepositiry.GetByIdAsync(dto.ReceiverFundId)
+            };
 
-            if (await incomeTypeTRepository.IsExistById(dto.TypeTransactionId))
-            {
-                tmpTransaction.TypeTransaction = await incomeTypeTRepository.GetByIdAsync(dto.TypeTransactionId);
-                return tmpTransaction;
-            }
-                
+        public static async Task<TransactionType> ToTransactionType(
+            this TransactionTypeDTO dto, 
+            IRepository<TransactionType> transactionTypeRepository) => new TransactionType()
+        {
+            Id = dto.Id,
+            Name = dto.Name,
+            ReverseType = await transactionTypeRepository.GetByIdAsync(dto.ReverseTypeId),
+            TypeStatus = (TypeStatuses)Enum.GetValues(typeof(TypeStatuses)).GetValue(dto.TypeStatusId)
 
-            if (await balanceTypeTRepository.IsExistById(dto.TypeTransactionId))
-            {
-                tmpTransaction.TypeTransaction = await balanceTypeTRepository.GetByIdAsync(dto.TypeTransactionId);
-                return tmpTransaction;
-            }
-                
-
-            else
-                tmpTransaction.TypeTransaction = null;
-
-            return tmpTransaction;
-
-
-        }        
+        };
 
     }
 }

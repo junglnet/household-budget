@@ -1,49 +1,25 @@
 ﻿using System;
 using HouseholdBudget.Common.Interfaces;
+using HouseholdBudget.Common.Entities;
 
 namespace HouseholdBudget.Common.Entities
 {
-    public class Transaction : DictionaryBase, IComparable, ICloneable
+    public class Transaction : DictionaryBase, IComparable, ICloneable, IMarkToDelete
     {
 
         public Transaction()
         {
-            RelationId = null;
+            
             PlannedSum = 0;
             FactSum = 0;
             DateTime = DateTime.Now;
+            IsMarkedToDelete = false;
 
         }
 
-        public Transaction(string name)
-        {
-            RelationId = null;
-            Name = name;
-            PlannedSum = 0;
-            FactSum = 0;
-            DateTime = DateTime.Now;
-
-        }
-
-        public Transaction(string relationId, string name)
-        {
-            RelationId = relationId;
-            Name = name;
-            PlannedSum = 0;
-            FactSum = 0;
-            DateTime = DateTime.Now;
-
-        }
-
-        /// <summary>
-        /// Получение операции транзации
-        /// </summary>
-        /// <returns></returns>
-        public decimal GetOperation() =>
-            TypeTransaction.GetOperation(this);
-
-        public ITypeTransaction GetReverseType() =>
-            TypeTransaction.GetReverseType();
+        public TransactionType GetReverseType() =>
+            TransactionType.ReverseType;
+    
 
         public object Clone() =>
             this.MemberwiseClone();
@@ -57,9 +33,7 @@ namespace HouseholdBudget.Common.Entities
                 throw new Exception("Невозможно сравнить два объекта");
 
         }
-              
-        public string RelationId { get; set; }
-
+        
         /// <summary>
         /// Плановая сумма транзации
         /// </summary>
@@ -78,9 +52,9 @@ namespace HouseholdBudget.Common.Entities
         /// <summary>
         /// Тип транзации
         /// </summary>
-        public ITypeTransaction TypeTransaction { get; set; }
+        public TransactionType TransactionType { get; set; }
                       
-
+        public bool IsMarkedToDelete { get; set; }
 
     }
 }

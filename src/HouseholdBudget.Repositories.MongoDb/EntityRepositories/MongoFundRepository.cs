@@ -9,13 +9,13 @@ using MongoDB.Driver;
 
 namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
 {
-    public class MongoBudgetaryFundRepository : IRepository<BudgetaryFund>
+    public class MongoFundRepository : IRepository<Fund>
     {
 
         private readonly MongoRepositoriesBundle _bundle;
         private IRepository<Transaction> _transactionRepository;
 
-        public MongoBudgetaryFundRepository(
+        public MongoFundRepository(
             MongoRepositoriesBundle bundle,
            IRepository<Transaction> transactionRepository)
         {
@@ -25,13 +25,13 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
         }
 
 
-        public async Task<string> AddAsync(BudgetaryFund item)
+        public async Task<string> AddAsync(Fund item)
         {
             item.Id = ObjectId.GenerateNewId().ToString();
 
             await AddOrUpdateTransactionAsync(item.Transactions);
 
-            await _bundle.BudgetaryFundRepository.Collection.InsertOneAsync(item.ToDto());
+            await _bundle.FundRepository.Collection.InsertOneAsync(item.ToDto());
 
             return item.Id;
         }
@@ -44,8 +44,8 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
             
             var deleteResult =
                 await
-                    _bundle.BudgetaryFundRepository.Collection.DeleteOneAsync(
-                        new ExpressionFilterDefinition<BudgetaryFundDTO>(s => s.Id == id));
+                    _bundle.FundRepository.Collection.DeleteOneAsync(
+                        new ExpressionFilterDefinition<FundDTO>(s => s.Id == id));
 
             await DeleteAllTransactionAsync(curItem.Transactions);
 
@@ -54,40 +54,40 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
         }
 
 
-        public async Task<IReadOnlyList<BudgetaryFund>> GetAllAsync()
+        public async Task<IReadOnlyList<Fund>> GetAllAsync()
         {
-            var asyncCursor = await _bundle.BudgetaryFundRepository.Collection
-                .Find(FilterDefinition<BudgetaryFundDTO>.Empty).ToListAsync();
+            var asyncCursor = await _bundle.FundRepository.Collection
+                .Find(FilterDefinition<FundDTO>.Empty).ToListAsync();
 
-            var funds = new List<BudgetaryFund>();
+            var funds = new List<Fund>();
 
-            foreach (BudgetaryFundDTO bf in asyncCursor)            
-                funds.Add(await bf.ToBudgetaryFund(_transactionRepository));            
+            foreach (FundDTO bf in asyncCursor)            
+                funds.Add(await bf.ToFund(_transactionRepository));            
 
             return funds;
         }
 
 
-        public async Task<BudgetaryFund> GetByIdAsync(string id) =>
+        public async Task<Fund> GetByIdAsync(string id) =>
             (await IsExistById(id)) ? (
                 await (
-                    await _bundle.BudgetaryFundRepository.Collection.Find(s => s.Id == id)
+                    await _bundle.FundRepository.Collection.Find(s => s.Id == id)
                     .FirstOrDefaultAsync())
-                .ToBudgetaryFund(_transactionRepository)) 
+                .ToFund(_transactionRepository)) 
             : null;
         
 
-        public async Task<IReadOnlyList<BudgetaryFund>> GetByIdsAsync(string[] ids)
+        public async Task<IReadOnlyList<Fund>> GetByIdsAsync(string[] ids)
         {
-            var funds = new List<BudgetaryFund>();
+            var funds = new List<Fund>();
             foreach (string id in ids)
             {
                 if (await IsExistById(id))
 
                     funds.Add(
                         await (
-                            await _bundle.BudgetaryFundRepository.Collection.Find(s => s.Id == id).FirstOrDefaultAsync())
-                        .ToBudgetaryFund(_transactionRepository));
+                            await _bundle.FundRepository.Collection.Find(s => s.Id == id).FirstOrDefaultAsync())
+                        .ToFund(_transactionRepository));
 
             }
 
@@ -95,14 +95,14 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
         }
 
 
-        public async Task<bool> UpdateAsync(BudgetaryFund item)
+        public async Task<bool> UpdateAsync(Fund item)
         {
             await AddOrUpdateTransactionAsync(item.Transactions);
 
             var replaceResult =
                 await
-                    _bundle.BudgetaryFundRepository.Collection.ReplaceOneAsync(
-                        new ExpressionFilterDefinition<BudgetaryFundDTO>(s => s.Id == item.Id), item.ToDto());
+                    _bundle.FundRepository.Collection.ReplaceOneAsync(
+                        new ExpressionFilterDefinition<FundDTO>(s => s.Id == item.Id), item.ToDto());
 
             return replaceResult.IsAcknowledged && (replaceResult.MatchedCount == 1);
         }
@@ -110,7 +110,7 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
 
         public async Task<bool> IsExistById(string id) =>
 
-            await _bundle.BudgetaryFundRepository.Collection
+            await _bundle.FundRepository.Collection
                 .Find(s => s.Id == id).Limit(1).CountDocumentsAsync() != 0;
 
         private async Task AddOrUpdateTransactionAsync(List<Transaction> items)

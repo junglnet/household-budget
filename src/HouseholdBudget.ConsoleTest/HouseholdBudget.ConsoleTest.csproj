@@ -36,6 +36,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,8 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HouseholdBudget.BL\HouseholdBudget.BL.csproj">
+      <Project>{bf60cf87-1626-4854-8458-391f20e8c01a}</Project>
+      <Name>HouseholdBudget.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HouseholdBudget.Common\HouseholdBudget.Common.csproj">
       <Project>{4c0c4d14-6305-490e-8cd7-bef526370200}</Project>
       <Name>HouseholdBudget.Common</Name>
