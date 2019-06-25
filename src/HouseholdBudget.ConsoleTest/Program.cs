@@ -17,79 +17,10 @@ namespace HouseholdBudget.ConsoleTest
             try
             {
                 AppFactoty.Init();
+                var tl = Factory.Current.TransactionService.GetAllAsync().GetAwaiter().GetResult();
 
-                var t1TranType = new TransactionType()
-                {
-                    Name = "Перевод со счета",
-                    TypeStatus = TypeStatuses.Expense                    
-
-                };
-
-                await Factory.Current.TransctionTypeRepository.AddAsync(t1TranType);
-                var t2TranType = new TransactionType()
-                {
-
-                    Name = "Перевод на счет",
-                    TypeStatus = TypeStatuses.Income,
-                    ReverseType = t1TranType
-
-                };
-
-                await Factory.Current.TransctionTypeRepository.AddAsync(t2TranType);
-
-                var fund1 = new Fund()
-                {
-                    Name = "Основной фонд",
-                    Transactions = new List<Transaction>()
-                    {
-                        new Transaction()
-                        {
-                            PlannedSum = 999,
-                            FactSum = 999,
-                            TransactionType = t1TranType,
-                            Name = t1TranType.Name
-                        }
-                    }
-
-                };
-
-                var fund2 = new Fund()
-                {
-                    Name = "фонд",
-                    
-
-                };
-
-                WriteLine("Сохранен фонд {0}", await Factory.Current.FundService.SaveAsync(fund1));
-                WriteLine("Сохранен фонд {0}", await Factory.Current.FundService.SaveAsync(fund2));
-
-                var t1Transaction = new Transaction()
-                {
-
-                    PlannedSum = 100,
-                    FactSum = 110,
-                    TransactionType = t2TranType                    
-
-                };
-
-                var fundEditOperationLayer = new FundEditOperationLayer(
-                    Factory.Current.TransactionService, 
-                    Factory.Current.FundService, 
-                    Factory.Current.TransactionRouteEditService);
-
-                ;
-
-                var result = await fundEditOperationLayer.SaveTransactionToFundAsync(t1Transaction, fund1, fund2);
-
-                WriteLine(result);
-                // WriteLine(t1Transaction.Id);
-                ReadLine();
-
-                t1Transaction.PlannedSum = 777000;
-
-                var гзвResult = await fundEditOperationLayer.UpdateTransactionInFundAsync(t1Transaction);
-
-                WriteLine(гзвResult);
+                WriteLine(tl.Count);
+                
             }
 
             catch (Exception ex)

@@ -23,8 +23,17 @@ namespace HouseholdBudget
     {
         public MainWindow()
         {
-            InitializeComponent();
-            DataContext = new AppMainWindow();
+            try
+            {
+                InitializeComponent();
+                DataContext = new MainWindowVM();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+            
            
         }
     }

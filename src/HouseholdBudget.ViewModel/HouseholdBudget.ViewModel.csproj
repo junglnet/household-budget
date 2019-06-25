@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,7 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppFactoty.cs" />
-    <Compile Include="AppMainWindow.cs" />
+    <Compile Include="MainWindowVM.cs" />
+    <Compile Include="Entities\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
