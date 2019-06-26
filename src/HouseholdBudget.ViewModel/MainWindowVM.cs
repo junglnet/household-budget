@@ -21,21 +21,26 @@ namespace HouseholdBudget.ViewModel
         public MainWindowVM()
         {
 
-            Transactions = new ObservableCollection<Transaction>()
-            {
-                new Transaction()
-                {
-                    Name = "Tesd"
-                }
-            };
-              
-            
             AppFactoty.Init();
-                       
-           // var tr = AppFactoty.Current.TransactionService.GetAllAsync().GetAwaiter().GetResult();
 
+            NotifyTaskCompletion 
+                = new NotifyTaskCompletion<IReadOnlyList<Transaction>>(
+                    AppFactoty.Current.TransactionService.GetAllAsync());
+        //    Transactions = new ObservableCollection<Transaction>(NotifyTaskCompletion.Result);
+
+         //   Init();
 
         }
+
+        public async void Init()
+        {
+            
+            var tmp = await AppFactoty.Current.TransactionService.GetAllAsync();
+            Transactions = new ObservableCollection<Transaction>(tmp);
+          //  OnPropertyChanged("Transactions");
+        }
+
+        public NotifyTaskCompletion<IReadOnlyList<Transaction>> NotifyTaskCompletion { get; private set; }
 
         private RelayCommand addCommand;
         public RelayCommand AddCommand
@@ -55,7 +60,20 @@ namespace HouseholdBudget.ViewModel
             }
         }
         
-        public ObservableCollection<Transaction> Transactions { get; set; }
+        public ObservableCollection<Transaction> Transactions
+        {
+            get
+            {
+                return transactions;
+            }
+            set
+            {
+                transactions = value;
+                OnPropertyChanged("Transactions");
+            }
+        }
+
+        private ObservableCollection<Transaction> transactions;
 
         public Transaction SelectedPhone
         {

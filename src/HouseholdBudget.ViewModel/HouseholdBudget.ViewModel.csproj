@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppFactoty.cs" />
+    <Compile Include="Entities\NotifyTaskCompletion.cs" />
     <Compile Include="MainWindowVM.cs" />
     <Compile Include="Entities\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

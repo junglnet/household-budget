@@ -35,7 +35,11 @@ namespace HouseholdBudget.BL
         public async Task<IReadOnlyList<Transaction>> GetManyAsync(string[] ids) =>
             await _transationRepository.GetByIdsAsync(ids);
 
-        public async Task<IReadOnlyList<Transaction>> GetAllAsync() =>
-            await _transationRepository.GetAllAsync();
+        public async Task<IReadOnlyList<Transaction>> GetAllAsync()
+        {
+            await Task.Delay(500);
+            return await _transationRepository.GetAllAsync().ConfigureAwait(false);
+        }
+           
     }
 }

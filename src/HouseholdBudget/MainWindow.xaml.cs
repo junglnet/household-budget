@@ -30,7 +30,7 @@ namespace HouseholdBudget
             }
             catch (Exception ex)
             {
-
+                
                 MessageBox.Show(ex.ToString());
             }
             

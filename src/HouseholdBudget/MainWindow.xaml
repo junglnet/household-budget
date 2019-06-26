@@ -6,6 +6,10 @@
         xmlns:local="clr-namespace:HouseholdBudget"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+       
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -15,25 +19,29 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="0.2*" />
         </Grid.RowDefinitions>
-        <ListBox Grid.Column="0" ItemsSource="{Binding Transactions}"
+        <ListBox Grid.Column="0" ItemsSource="{Binding NotifyTaskCompletion.Result}"
                  SelectedItem="{Binding SelectedPhone}">
+            
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="5">                        
-                        <TextBlock Text="{Binding Path=Name}" />
-                        
+                    <StackPanel Margin="5" Orientation="Horizontal">                        
+                        <TextBlock Margin="0 0 10 0" Text="{Binding Path=Name}" />
+                        <TextBlock Margin="0 0 10 0" Text="{Binding Path=DataTime}"/>
+                        <TextBlock Margin="0 0 10 0" Text="{Binding Path=PlannedSum}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button Command="{Binding AddCommand}">+</Button>
         </StackPanel>
-
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+        <Label Content="Loading..." Visibility="{Binding NotifyTaskCompletion.IsNotCompleted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        </StackPanel>
         <StackPanel Grid.Column="1" DataContext="{Binding SelectedPhone}">
-            <TextBlock Text="Выбранный элемент"  />
-            <TextBlock Text="name" />
-            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock Text="Выбранный элемент"  />
+        <TextBlock Text="name" />
+        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
             
         </StackPanel>
     </Grid>
