@@ -22,6 +22,8 @@ namespace HouseholdBudget.ViewModel.Entities
             this.canExecute = canExecute;
         }
 
+        
+
         public bool CanExecute(object parameter)
         {
             return this.canExecute == null || this.canExecute(parameter);

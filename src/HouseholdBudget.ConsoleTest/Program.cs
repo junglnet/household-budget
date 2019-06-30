@@ -17,10 +17,23 @@ namespace HouseholdBudget.ConsoleTest
             try
             {
                 AppFactoty.Init();
-                var tl = Factory.Current.TransactionService.GetAllAsync().GetAwaiter().GetResult();
+                var fund1 = new Fund()
+                {
+                    Name = "Fund 1 Name",
+                    Transactions = new List<Transaction>(),
+                    
+                };
 
-                WriteLine(tl.Count);
-                
+                var fund2 = new Fund()
+                {
+                    Name = "Fund 2 Name",
+                    Transactions = new List<Transaction>(),
+
+                };
+
+                await Factory.Current.FundService.SaveAsync(fund1);
+                await Factory.Current.FundService.SaveAsync(fund2);
+
             }
 
             catch (Exception ex)

@@ -70,6 +70,20 @@ namespace HouseholdBudget.BL
             
         }
 
+        public Task<Fund> GetOneAsync(string id)
+        {
+            return _fundRepository.GetByIdAsync(id);
+        }
+
+        public Task<IReadOnlyList<Fund>> GetManyAsync(string[] ids)
+        {
+            return _fundRepository.GetByIdsAsync(ids);
+        }
+
+        public Task<IReadOnlyList<Fund>> GetAllAsync()
+        {
+            return _fundRepository.GetAllAsync();
+        }
 
         private readonly IRepository<Fund> _fundRepository;
         private readonly ITransactionService _transactionService;

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace HouseholdBudget.Common.Interfaces
 {
-    public interface IFundService : IEntityEditService<Fund>
+    public interface IFundService : IEntityEditService<Fund>, IEntityReadService<Fund>
     {
 
     }

@@ -44,10 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppFactoty.cs" />
+    <Compile Include="FundTabViewModel.cs" />
     <Compile Include="Entities\NotifyTaskCompletion.cs" />
-    <Compile Include="MainWindowVM.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Entities\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HouseholdBudget.BL\HouseholdBudget.BL.csproj">
