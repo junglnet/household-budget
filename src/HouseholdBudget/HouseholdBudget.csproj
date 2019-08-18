@@ -51,8 +51,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmDialogs">
+      <HintPath>.\MvvmDialogs.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,7 +91,42 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="AppFactoty.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Entities\AsyncCommand.cs" />
+    <Compile Include="Entities\AsyncCommandBase.cs" />
+    <Compile Include="Entities\NotifyTaskCompletion.cs" />
+    <Compile Include="Entities\RelayCommand.cs" />
+    <Compile Include="Interfaces\IDialogService.cs" />
+    <Compile Include="Interfaces\IViewModel.cs" />
+    <Compile Include="Presenters\MessageBoxPresenter.cs" />
+    <Compile Include="Presenters\OpenFileDialogPresenter.cs" />
+    <Compile Include="Presenters\SaveFileDialogPresenter.cs" />
+    <Compile Include="Services\DialogService.cs" />
+    <Compile Include="ViewModel\DialogViewModel\CustomDialogViewModel.cs" />
+    <Compile Include="ViewModel\DialogViewModel\MessageBoxViewModel.cs" />
+    <Compile Include="ViewModel\DialogViewModel\MinimalDialogViewModel.cs" />
+    <Compile Include="ViewModel\DialogViewModel\OpenFileDialogViewModel.cs" />
+    <Compile Include="ViewModel\DialogViewModel\SaveFileDialogViewModel.cs" />
+    <Compile Include="ViewModel\FundTabViewModel.cs" />
+    <Compile Include="Interfaces\IAsyncCommand.cs" />
+    <Compile Include="Interfaces\ITabOwner.cs" />
+    <Compile Include="Interfaces\ITabViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="TemplateSelectors\TabContentTemplateSelector.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\MinimalDialogBox.xaml.cs">
+      <DependentUpon>MinimalDialogBox.xaml</DependentUpon>
+    </Compile>
+    <Page Include="DialogsDictonary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomDialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -78,10 +134,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\CustomDialogBox.xaml.cs">
+      <DependentUpon>CustomDialogBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\MinimalDialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabView\FundListTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -101,6 +169,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -122,10 +191,19 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HouseholdBudget.ViewModel\HouseholdBudget.ViewModel.csproj">
-      <Project>{57e8de5f-999a-430b-9691-485210debf16}</Project>
-      <Name>HouseholdBudget.ViewModel</Name>
+    <ProjectReference Include="..\HouseholdBudget.BL\HouseholdBudget.BL.csproj">
+      <Project>{bf60cf87-1626-4854-8458-391f20e8c01a}</Project>
+      <Name>HouseholdBudget.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HouseholdBudget.Common\HouseholdBudget.Common.csproj">
+      <Project>{c88253bb-c8c7-4d82-bedd-6046bd88a196}</Project>
+      <Name>HouseholdBudget.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HouseholdBudget.Repositories.MongoDb\HouseholdBudget.Repositories.MongoDb.csproj">
+      <Project>{fd935a91-6656-41cf-9584-45dcee8cf470}</Project>
+      <Name>HouseholdBudget.Repositories.MongoDb</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

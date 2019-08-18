@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:HouseholdBudget.ViewModel"
+			        xmlns:view="clr-namespace:HouseholdBudget.View"
+			        xmlns:pre="clr-namespace:HouseholdBudget.Presenters"
+                    xmlns:local="clr-namespace:HouseholdBudget">
+
+    <view:MinimalDialogBox x:Key="{x:Type vm:MinimalDialogViewModel}" x:Shared="False" />
+
+    <view:CustomDialogBox x:Key="{x:Type vm:CustomDialogViewModel}" x:Shared="False" />
+   
+
+    <pre:MessageBoxPresenter x:Key="{x:Type vm:MessageBoxViewModel}" />
+
+
+    <pre:OpenFileDialogPresenter x:Key="{x:Type vm:OpenFileDialogViewModel}" />
+
+    <pre:SaveFileDialogPresenter x:Key="{x:Type vm:SaveFileDialogViewModel}" />
+
+</ResourceDictionary>

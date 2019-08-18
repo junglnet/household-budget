@@ -57,12 +57,12 @@ namespace HouseholdBudget.Repositories.MongoDb.EntityRepositories
         public async Task<IReadOnlyList<Fund>> GetAllAsync()
         {
             var asyncCursor = await _bundle.FundRepository.Collection
-                .Find(FilterDefinition<FundDTO>.Empty).ToListAsync();
+                .Find(FilterDefinition<FundDTO>.Empty).ToListAsync().ConfigureAwait(false);
 
             var funds = new List<Fund>();
 
             foreach (FundDTO bf in asyncCursor)            
-                funds.Add(await bf.ToFund(_transactionRepository));            
+                funds.Add(await bf.ToFund(_transactionRepository).ConfigureAwait(false));            
 
             return funds;
         }

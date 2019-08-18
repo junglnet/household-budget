@@ -2,7 +2,7 @@
 using System.Windows.Input;
 
 
-namespace HouseholdBudget.ViewModel.Entities
+namespace HouseholdBudget.Entities
 {
     public class RelayCommand : ICommand
     {

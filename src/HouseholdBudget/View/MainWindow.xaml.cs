@@ -26,7 +26,6 @@ namespace HouseholdBudget
             try
             {
                 InitializeComponent();
-                DataContext = new MainWindowViewModel();
             }
             catch (Exception ex)
             {

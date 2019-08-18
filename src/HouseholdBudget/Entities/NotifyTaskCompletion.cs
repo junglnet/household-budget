@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace HouseholdBudget.ViewModel.Entities
+namespace HouseholdBudget.Entities
 {
     public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
     {
